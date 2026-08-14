@@ -1,1005 +1,1174 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color" content="#7c5cff">
-
+<meta name="theme-color" content="#7c4dff">
 <title>روزانه من | Habit Tracker</title>
 
 <style>
+:root{
+  --purple:#7c4dff;
+  --purple2:#9b6cff;
+  --purple-soft:#f1ebff;
+  --green:#27b889;
+  --green-soft:#e9f8f2;
+  --orange:#ff9f2f;
+  --orange-soft:#fff3df;
+  --pink:#f34f86;
+  --pink-soft:#fff0f5;
+  --blue:#4385f5;
+  --text:#1d2554;
+  --muted:#77809d;
+  --border:#e9e7f3;
+  --bg:#f8f7fc;
+  --card:#fff;
+  --shadow:0 8px 28px rgba(49,42,95,.07);
+}
 
 *{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent
 }
 
 body{
-margin:0;
-font-family:
--apple-system,
-BlinkMacSystemFont,
-"Segoe UI",
-Tahoma,
-Arial,
-sans-serif;
+  margin:0;
+  background:linear-gradient(135deg,#fbfaff,#f7f8ff);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Tahoma,Arial,sans-serif
+}
 
-background:#f8f6ff;
-color:#29243d;
+button,input,textarea{
+  font:inherit
+}
+
+button{
+  cursor:pointer
 }
 
 .container{
-max-width:1200px;
-margin:auto;
-padding:18px 14px 45px;
+  max-width:1250px;
+  margin:auto;
+  padding:16px 18px 35px
+}
+
+.card{
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:18px
 }
 
 /* HEADER */
 
-.header{
-background:linear-gradient(135deg,#7c5cff,#a96cff);
-color:white;
-border-radius:28px;
-padding:24px;
-margin-bottom:18px;
-box-shadow:0 12px 35px rgba(124,92,255,.20);
+.topbar{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:16px;
+  margin-bottom:14px
 }
 
-.header h1{
-margin:0;
-font-size:28px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px
 }
 
-.header p{
-margin:8px 0 0;
-opacity:.9;
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  background:linear-gradient(135deg,#7442ee,#a778ff);
+  font-size:25px;
+  font-weight:900;
+  box-shadow:0 7px 18px #7c4dff33
 }
 
-/* CARDS */
-
-.card{
-background:white;
-border-radius:24px;
-padding:20px;
-margin-bottom:18px;
-box-shadow:0 7px 25px rgba(50,40,90,.08);
+.brand h1{
+  font-size:24px;
+  margin:0;
+  font-weight:900
 }
 
-.section-title{
-font-size:20px;
-font-weight:900;
-margin-bottom:16px;
+.brand p{
+  margin:2px 0 0;
+  color:var(--muted);
+  font-size:12px
 }
 
-/* SUMMARY */
-
-.summary{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.date-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:9px 14px;
+  background:#fff;
+  min-width:265px
 }
 
-.summary-box{
-background:#f7f3ff;
-border-radius:20px;
-padding:18px 10px;
-text-align:center;
+.date-nav button,
+.icon-btn{
+  border:0;
+  background:transparent;
+  color:var(--text);
+  font-size:20px
 }
 
-.summary-number{
-font-size:27px;
-font-weight:900;
-color:#704de8;
+.date-title{
+  font-weight:800;
+  white-space:nowrap
 }
 
-.summary-label{
-font-size:13px;
-color:#777;
-margin-top:5px;
+.actions{
+  display:flex;
+  justify-content:flex-start;
+  gap:8px
 }
 
-/* HABITS */
-
-.habit-list{
-display:flex;
-flex-direction:column;
-gap:9px;
+.action{
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 15px;
+  color:var(--text)
 }
 
-.habit{
-display:flex;
-align-items:center;
-gap:10px;
-background:#faf9ff;
-padding:12px;
-border-radius:16px;
+.action.primary{
+  background:linear-gradient(135deg,#7442ee,#9862f7);
+  color:#fff;
+  border:0
 }
 
-.habit input{
-flex:1;
-border:0;
-outline:0;
-background:transparent;
-font-size:15px;
-color:#29243d;
-min-width:0;
+/* DASHBOARD */
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.1fr 1.45fr .72fr;
+  gap:14px
 }
 
-.delete-btn{
-border:0;
-background:#ffe8ee;
-color:#e85b78;
-width:34px;
-height:34px;
-border-radius:10px;
-font-size:16px;
+.progress-card{
+  display:flex;
+  align-items:center;
+  gap:25px
 }
 
-.add-btn{
-margin-top:13px;
-width:100%;
-border:0;
-padding:14px;
-border-radius:15px;
-background:#eee9ff;
-color:#6748e8;
-font-size:15px;
-font-weight:800;
+.ring{
+  width:155px;
+  height:155px;
+  border-radius:50%;
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(var(--purple) var(--p),#e9e3fb 0);
+  position:relative
 }
 
-/* MONTH */
-
-.month-progress{
-display:flex;
-align-items:center;
-gap:25px;
+.ring:after{
+  content:"";
+  width:116px;
+  height:116px;
+  background:#fff;
+  border-radius:50%;
+  position:absolute
 }
 
-.circle{
-width:145px;
-height:145px;
-border-radius:50%;
-
-background:
-conic-gradient(
-#7c5cff var(--progress),
-#eeeaff 0
-);
-
-display:flex;
-align-items:center;
-justify-content:center;
-flex-shrink:0;
+.ring-inner{
+  position:relative;
+  z-index:2;
+  text-align:center
 }
 
-.circle-inner{
-width:108px;
-height:108px;
-background:white;
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:27px;
-font-weight:900;
-color:#684be8;
+.ring-num{
+  font-size:28px;
+  font-weight:900
 }
 
-.month-text{
-flex:1;
+.ring-label{
+  font-size:12px;
+  color:var(--muted)
 }
 
-.month-text h3{
-margin:0 0 8px;
+.metric-list{
+  display:grid;
+  gap:17px
 }
 
-.month-text p{
-margin:0;
-line-height:1.8;
-color:#777;
+.metric{
+  display:flex;
+  align-items:center;
+  gap:10px
 }
 
-/* WEEKS */
-
-.weeks{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
+.metric-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:var(--purple-soft)
 }
 
-.week{
-border-radius:22px;
-padding:15px;
-color:white;
-overflow:hidden;
+.metric strong{
+  display:block;
+  font-size:20px
 }
 
-.week:nth-child(1){
-background:linear-gradient(145deg,#7557ee,#9a82ff);
-}
-
-.week:nth-child(2){
-background:linear-gradient(145deg,#39ad82,#72d0ae);
-}
-
-.week:nth-child(3){
-background:linear-gradient(145deg,#ee9b2d,#f7c36b);
-}
-
-.week:nth-child(4){
-background:linear-gradient(145deg,#ed5b8b,#f59bb8);
-}
-
-.week-title{
-font-size:18px;
-font-weight:900;
-margin-bottom:13px;
-text-align:center;
-}
-
-/* HABIT GRID */
-
-.habit-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
-}
-
-.day-title{
-text-align:center;
-font-size:11px;
-opacity:.9;
-margin-bottom:4px;
-}
-
-.habit-check{
-width:29px;
-height:29px;
-margin:auto;
-
-border-radius:8px;
-
-border:2px solid rgba(255,255,255,.8);
-
-background:rgba(255,255,255,.12);
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-cursor:pointer;
-
-font-weight:900;
-}
-
-.habit-check.active{
-background:white;
-color:#704de8;
-}
-
-/* WEEK CIRCLES */
-
-.week-circles{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-}
-
-.week-circle-box{
-text-align:center;
-}
-
-.small-circle{
-width:95px;
-height:95px;
-margin:auto;
-
-border-radius:50%;
-
-background:
-conic-gradient(
-#7c5cff var(--progress),
-#eeeaff 0
-);
-
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.small-circle-inner{
-width:72px;
-height:72px;
-
-border-radius:50%;
-background:white;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-weight:900;
-color:#684be8;
-}
-
-.week-circle-box p{
-font-size:13px;
-color:#777;
+.metric span{
+  font-size:11px;
+  color:var(--muted)
 }
 
 /* LINE CHART */
 
+.chart-card{
+  min-height:240px
+}
+
+.card-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px
+}
+
+.card-title h2{
+  font-size:16px;
+  margin:0;
+  font-weight:900
+}
+
+.title-icon{
+  color:var(--purple);
+  font-size:19px
+}
+
 .line-chart{
-height:280px;
-position:relative;
-margin-top:20px;
-border-radius:18px;
-background:
-repeating-linear-gradient(
-to bottom,
-#eeeaff 0,
-#eeeaff 1px,
-transparent 1px,
-transparent 25%
-);
+  width:100%;
+  height:175px;
+  display:block
 }
 
-.chart-svg{
-width:100%;
-height:100%;
-overflow:visible;
+/* STREAK */
+
+.streak{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center
 }
 
-.chart-labels{
-display:flex;
-justify-content:space-between;
-font-size:11px;
-color:#888;
-margin-top:5px;
+.fire{
+  font-size:45px
+}
+
+.streak-num{
+  font-size:31px;
+  font-weight:900
+}
+
+.streak p{
+  color:var(--muted);
+  margin:3px 0 15px;
+  font-size:13px
+}
+
+.trophy{
+  background:#fff7ee;
+  border:1px solid #ffe6c8;
+  border-radius:14px;
+  padding:13px;
+  font-size:12px
+}
+
+.trophy b{
+  display:block;
+  font-size:17px;
+  margin-top:5px
+}
+
+/* QUOTE + NOTES */
+
+.mid-grid{
+  display:grid;
+  grid-template-columns:.72fr 1.5fr;
+  gap:14px;
+  margin-top:14px
+}
+
+.quote{
+  min-height:190px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center
+}
+
+.quote h3{
+  font-size:14px;
+  margin:0 0 10px
+}
+
+.quote-text{
+  font-size:17px;
+  line-height:1.9;
+  margin:0 18px
+}
+
+.quote-author{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:8px
+}
+
+.quote-mark{
+  font-size:45px;
+  color:#d9c9ff;
+  line-height:.5
+}
+
+.notes textarea{
+  width:100%;
+  min-height:115px;
+  border:1px solid #e5e2ee;
+  border-radius:13px;
+  padding:14px;
+  outline:none;
+  resize:vertical;
+  background:#fcfcff;
+  color:var(--text);
+  line-height:1.8
+}
+
+.save-status{
+  color:var(--green);
+  font-size:11px;
+  margin-top:7px;
+  text-align:left
+}
+
+/* HABITS */
+
+.habits-card{
+  margin-top:14px;
+  overflow:hidden
+}
+
+.habit-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between
+}
+
+.legend{
+  display:flex;
+  gap:15px;
+  font-size:11px;
+  color:var(--muted);
+  flex-wrap:wrap
+}
+
+.legend i{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:3px;
+  margin-left:4px
+}
+
+.l1{background:var(--purple)}
+.l2{background:var(--green)}
+.l3{background:var(--orange)}
+.l4{background:var(--pink)}
+
+.habit-board{
+  display:grid;
+  grid-template-columns:185px repeat(4,minmax(145px,1fr));
+  gap:7px;
+  margin-top:10px
+}
+
+.habit-names{
+  padding-top:42px
+}
+
+.habit-name{
+  height:39px;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid #f0eef5;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  padding:0 7px
+}
+
+.week-col{
+  border-radius:14px;
+  padding:10px 7px 8px
+}
+
+.w1{background:var(--purple-soft)}
+.w2{background:var(--green-soft)}
+.w3{background:var(--orange-soft)}
+.w4{background:var(--pink-soft)}
+
+.week-title{
+  text-align:center;
+  font-weight:900;
+  font-size:13px;
+  margin-bottom:8px
+}
+
+.days-head,
+.checks-row{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:5px
+}
+
+.days-head span{
+  text-align:center;
+  font-size:10px;
+  color:var(--muted)
+}
+
+.check-row{
+  height:39px;
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:5px;
+  align-items:center
+}
+
+.check{
+  width:19px;
+  height:19px;
+  border-radius:5px;
+  border:1.5px solid currentColor;
+  background:transparent;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  font-weight:900;
+  transition:.15s
+}
+
+.w1 .check{color:#8355e8}
+.w2 .check{color:#2aaa83}
+.w3 .check{color:#f29a23}
+.w4 .check{color:#ee4f83}
+
+.check.done{
+  color:#fff!important
+}
+
+.w1 .check.done{background:#7c4dff}
+.w2 .check.done{background:#27b889}
+.w3 .check.done{background:#ff9f2f}
+.w4 .check.done{background:#f34f86}
+
+.week-ring{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  margin:13px auto 2px;
+  background:conic-gradient(currentColor var(--p),#fff 0);
+  position:relative
+}
+
+.week-ring:after{
+  content:"";
+  width:60px;
+  height:60px;
+  background:#fff;
+  border-radius:50%;
+  position:absolute
+}
+
+.week-ring span{
+  position:relative;
+  z-index:2;
+  font-weight:900;
+  font-size:13px
+}
+
+.w1 .week-ring{color:#7c4dff}
+.w2 .week-ring{color:#27b889}
+.w3 .week-ring{color:#ff9f2f}
+.w4 .week-ring{color:#f34f86}
+
+.week-total{
+  text-align:center;
+  font-size:10px;
+  color:var(--muted)
+}
+
+.add-habit{
+  margin-top:12px;
+  width:100%;
+  border:1px dashed #cfc5eb;
+  background:#faf8ff;
+  color:#7049db;
+  border-radius:12px;
+  padding:10px
+}
+
+.habit-tools{
+  display:flex;
+  gap:6px
+}
+
+.small-btn{
+  border:0;
+  background:#f3efff;
+  color:#7049db;
+  border-radius:8px;
+  padding:6px 9px;
+  font-size:11px
 }
 
 /* CALENDAR */
 
-.calendar-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:15px;
+.bottom-grid{
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:14px;
+  margin-top:14px
 }
 
-.calendar-title{
-font-size:20px;
-font-weight:900;
+.calendar-wrap{
+  overflow:auto
 }
 
-.calendar-btn{
-border:0;
-background:#eee9ff;
-color:#6748e8;
-width:42px;
-height:42px;
-border-radius:13px;
-font-size:20px;
-cursor:pointer;
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(58px,1fr));
+  gap:5px;
+  min-width:420px
 }
 
-.calendar-weekdays{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
-margin-bottom:7px;
+.cal-head{
+  text-align:center;
+  font-size:11px;
+  color:var(--muted);
+  padding:4px
 }
 
-.calendar-weekday{
-text-align:center;
-font-size:12px;
-font-weight:800;
-color:#777;
+.cal-day{
+  min-height:60px;
+  border:1px solid #eeeaf5;
+  border-radius:9px;
+  padding:6px;
+  position:relative;
+  background:#fff
 }
 
-.calendar-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:7px;
+.cal-day.empty{
+  border:0;
+  background:transparent
 }
 
-.calendar-day{
-min-height:65px;
-border-radius:15px;
-background:#faf9ff;
-border:1px solid #eeeafa;
-padding:7px;
-cursor:pointer;
-position:relative;
-transition:.2s;
+.cal-day.today{
+  border:2px solid var(--purple);
+  box-shadow:0 3px 10px #7c4dff1c
 }
 
-.calendar-day:hover{
-transform:translateY(-2px);
+.cal-num{
+  font-size:11px;
+  font-weight:800
 }
 
-.calendar-day.today{
-border:2px solid #7c5cff;
+.cal-percent{
+  font-size:10px;
+  color:var(--green);
+  margin-top:9px
 }
 
-.calendar-day.empty{
-background:transparent;
-border:0;
-cursor:default;
+.cal-dot{
+  position:absolute;
+  bottom:6px;
+  left:7px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#dcd7ea
 }
 
-.calendar-number{
-font-size:13px;
-font-weight:800;
-}
-
-.calendar-percent{
-font-size:11px;
-color:#7655e8;
-margin-top:7px;
-font-weight:800;
-}
-
-.calendar-dot{
-width:7px;
-height:7px;
-border-radius:50%;
-background:#7c5cff;
-position:absolute;
-left:7px;
-bottom:7px;
-}
-
-/* QUOTE */
-
-.quote-card{
-background:
-linear-gradient(
-135deg,
-#faf7ff,
-#f0edff
-);
-}
-
-.quote{
-font-size:20px;
-font-weight:800;
-line-height:2;
-color:#493a75;
-text-align:center;
-}
-
-.quote-author{
-text-align:center;
-color:#8a82a5;
-font-size:13px;
-margin-top:10px;
-}
-
-.quote-loading{
-text-align:center;
-color:#888;
+.cal-dot.active{
+  background:var(--purple)
 }
 
 /* STATS */
 
-.extra-stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px
 }
 
-.stat{
-background:#faf9ff;
-border-radius:18px;
-padding:18px;
-text-align:center;
+.stat-box{
+  border:1px solid #f0eef6;
+  border-radius:14px;
+  padding:15px;
+  background:#fcfcff
 }
 
-.stat-icon{
-font-size:24px;
+.stat-box .big{
+  font-size:22px;
+  font-weight:900
 }
 
-.stat-number{
-font-size:22px;
-font-weight:900;
-color:#704de8;
-margin-top:6px;
+.stat-box small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px
 }
 
-.stat-label{
-font-size:12px;
-color:#777;
+.tip{
+  margin-top:10px;
+  background:#fbf7ff;
+  border:1px solid #eee5ff;
+  border-radius:14px;
+  padding:16px;
+  min-height:100px
+}
+
+.tip h3{
+  font-size:14px;
+  margin:0 0 8px
+}
+
+.tip p{
+  font-size:13px;
+  line-height:1.8;
+  margin:0
+}
+
+.footer{
+  margin-top:14px;
+  background:#f4efff;
+  border-radius:14px;
+  padding:10px;
+  text-align:center;
+  font-weight:800;
+  font-size:13px;
+  color:#51319b
 }
 
 /* MOBILE */
 
-@media(max-width:800px){
+@media(max-width:1000px){
 
-.container{
-padding:10px 9px 35px;
+  .dashboard-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .streak{
+    grid-column:1/-1;
+    min-height:160px
+  }
+
+  .habit-board{
+    grid-template-columns:145px repeat(4,minmax(125px,1fr))
+  }
 }
 
-.header{
-padding:20px;
-border-radius:22px;
+@media(max-width:760px){
+
+  .container{
+    padding:10px
+  }
+
+  .topbar{
+    grid-template-columns:1fr
+  }
+
+  .actions{
+    justify-content:space-between
+  }
+
+  .date-nav{
+    justify-self:center
+  }
+
+  .dashboard-grid,
+  .mid-grid,
+  .bottom-grid{
+    grid-template-columns:1fr
+  }
+
+  .progress-card{
+    justify-content:center
+  }
+
+  .habit-board{
+    grid-template-columns:130px repeat(4,150px);
+    overflow-x:auto
+  }
+
+  .habit-board>*{
+    min-width:0
+  }
+
+  .habit-names{
+    position:sticky;
+    right:0;
+    background:#fff;
+    z-index:3
+  }
+
+  .habit-head{
+    align-items:flex-start;
+    gap:10px;
+    flex-direction:column
+  }
+
+  .ring{
+    width:135px;
+    height:135px
+  }
+
+  .ring:after{
+    width:101px;
+    height:101px
+  }
+
+  .quote-text{
+    font-size:15px
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr)
+  }
 }
-
-.header h1{
-font-size:24px;
-}
-
-.summary{
-grid-template-columns:repeat(3,1fr);
-}
-
-.summary-box{
-padding:13px 5px;
-}
-
-.summary-number{
-font-size:22px;
-}
-
-.weeks{
-grid-template-columns:1fr;
-}
-
-.week{
-padding:17px;
-}
-
-.habit-grid{
-gap:5px;
-}
-
-.habit-check{
-width:31px;
-height:31px;
-}
-
-.month-progress{
-flex-direction:column;
-text-align:center;
-}
-
-.week-circles{
-grid-template-columns:repeat(2,1fr);
-}
-
-.extra-stats{
-grid-template-columns:1fr;
-}
-
-.calendar-day{
-min-height:58px;
-}
-
-.quote{
-font-size:17px;
-}
-
-}
-
-/* VERY SMALL */
-
-@media(max-width:390px){
-
-.habit-check{
-width:27px;
-height:27px;
-}
-
-.calendar-day{
-min-height:52px;
-padding:5px;
-}
-
-.calendar-percent{
-font-size:9px;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<!-- HEADER -->
+<header class="topbar">
 
-<div class="header">
+  <div class="brand">
+    <div class="logo">✓</div>
 
-<h1>🌷 روزانه من</h1>
+    <div>
+      <h1>روزانه من 🌷</h1>
+      <p>قدم‌های کوچک امروز، پیشرفت بزرگ فردا ✨</p>
+    </div>
+  </div>
 
-<p>
-قدم‌های کوچک امروز، پیشرفت بزرگ فردا ✨
-</p>
+  <div class="date-nav">
 
-</div>
+    <button onclick="changeMonth(-1)">‹</button>
 
+    <div class="date-title" id="dateTitle">—</div>
 
-<!-- SUMMARY -->
+    <button onclick="changeMonth(1)">›</button>
 
-<div class="card">
+  </div>
 
-<div class="section-title">
-📊 خلاصه عملکرد
-</div>
+  <div class="actions">
 
-<div class="summary">
+    <button class="action" onclick="toggleTheme()">
+      ☀️ / 🌙
+    </button>
 
-<div class="summary-box">
+    <button class="action primary" onclick="goToday()">
+      امروز
+    </button>
 
-<div
-class="summary-number"
-id="totalDone">
-0
-</div>
+  </div>
 
-<div class="summary-label">
-تیک‌های زده شده
-</div>
-
-</div>
+</header>
 
 
-<div class="summary-box">
+<!-- DASHBOARD -->
 
-<div
-class="summary-number"
-id="totalPossible">
-0
-</div>
+<section class="dashboard-grid">
 
-<div class="summary-label">
-روزهای برنامه‌ریزی شده
-</div>
+  <div class="card progress-card">
 
-</div>
+    <div
+      class="ring"
+      id="overallRing"
+      style="--p:0%"
+    >
+
+      <div class="ring-inner">
+
+        <div
+          class="ring-num"
+          id="overallPercent"
+        >
+          0%
+        </div>
+
+        <div class="ring-label">
+          پیشرفت کلی
+        </div>
+
+      </div>
+
+    </div>
 
 
-<div class="summary-box">
+    <div class="metric-list">
 
-<div
-class="summary-number"
-id="overallPercent">
-0%
-</div>
+      <div class="metric">
 
-<div class="summary-label">
-پیشرفت کلی
-</div>
+        <div class="metric-icon">
+          ☑️
+        </div>
 
-</div>
+        <div>
 
-</div>
+          <strong id="doneCount">
+            0
+          </strong>
 
-</div>
+          <span>
+            تیک‌های زده شده
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="metric">
+
+        <div class="metric-icon">
+          📅
+        </div>
+
+        <div>
+
+          <strong id="possibleCount">
+            0
+          </strong>
+
+          <span>
+            تیک‌های برنامه‌ریزی شده
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MONTHLY LINE CHART -->
+
+  <div class="card chart-card">
+
+    <div class="card-title">
+
+      <h2>
+        📈 نمودار پیشرفت ماهانه
+      </h2>
+
+    </div>
+
+    <svg
+      id="lineChart"
+      class="line-chart"
+      viewBox="0 0 600 190"
+      preserveAspectRatio="none"
+    ></svg>
+
+  </div>
+
+
+  <!-- STREAK -->
+
+  <div class="card streak">
+
+    <div class="fire">
+      🔥
+    </div>
+
+    <div
+      class="streak-num"
+      id="streakNum"
+    >
+      0
+    </div>
+
+    <p>
+      روز متوالی
+    </p>
+
+    <div class="trophy">
+
+      🏆 بهترین زنجیره شما
+
+      <b id="bestStreak">
+        0 روز
+      </b>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- QUOTE + NOTES -->
+
+<section class="mid-grid">
+
+  <div class="card quote">
+
+    <div class="quote-mark">
+      “
+    </div>
+
+    <h3>
+      ✨ سخن انگیزشی امروز
+    </h3>
+
+    <p
+      class="quote-text"
+      id="quoteText"
+    >
+      امروز بهترین روز برای شروع است.
+    </p>
+
+    <div
+      class="quote-author"
+      id="quoteAuthor"
+    >
+      —
+    </div>
+
+  </div>
+
+
+  <div class="card notes">
+
+    <div class="card-title">
+
+      <h2>
+        📝 توضیحات و یادداشت‌های من
+      </h2>
+
+    </div>
+
+    <textarea
+      id="notes"
+      placeholder="اینجا درباره امروزت، احساساتت، موفقیت‌ها یا کارهایی که باید انجام بدهی بنویس..."
+    ></textarea>
+
+    <div class="save-status">
+      💾 ذخیره خودکار روی همین دستگاه
+    </div>
+
+  </div>
+
+</section>
 
 
 <!-- HABITS -->
 
-<div class="card">
+<section class="card habits-card">
 
-<div class="section-title">
-🌱 عادت‌های روزانه
-</div>
+  <div class="habit-head">
 
-<div
-class="habit-list"
-id="habitList">
-</div>
+    <div class="card-title">
 
-<button
-class="add-btn"
-onclick="addHabit()">
+      <h2>
+        ☷ عادت‌های روزانه
+      </h2>
 
-＋ افزودن عادت جدید
+    </div>
 
-</button>
+    <div class="legend">
 
-</div>
+      <span>
+        <i class="l1"></i>
+        هفته ۱
+      </span>
 
+      <span>
+        <i class="l2"></i>
+        هفته ۲
+      </span>
 
-<!-- MONTH -->
+      <span>
+        <i class="l3"></i>
+        هفته ۳
+      </span>
 
-<div class="card">
+      <span>
+        <i class="l4"></i>
+        هفته ۴
+      </span>
 
-<div class="section-title">
-📈 پیشرفت ماهانه
-</div>
+    </div>
 
-<div class="month-progress">
+  </div>
 
-<div
-class="circle"
-id="monthCircle">
 
-<div
-class="circle-inner"
-id="monthPercent">
+  <div
+    class="habit-board"
+    id="habitBoard"
+  ></div>
 
-0%
 
-</div>
+  <button
+    class="add-habit"
+    onclick="addHabit()"
+  >
+    ＋ افزودن عادت جدید
+  </button>
 
-</div>
+</section>
 
-<div class="month-text">
 
-<h3>
-پیشرفت این ماه 🌸
-</h3>
+<!-- CALENDAR + STATS -->
 
-<p id="monthDescription">
-هنوز اولین قدم را برنداشتی؛ شروع کن! 🌱
-</p>
+<section class="bottom-grid">
 
-</div>
+  <div class="card calendar-wrap">
 
-</div>
+    <div class="card-title">
 
-</div>
+      <h2>
+        🗓️ تقویم این ماه
+      </h2>
 
+    </div>
 
-<!-- CALENDAR -->
+    <div
+      class="calendar"
+      id="calendar"
+    ></div>
 
-<div class="card">
+  </div>
 
-<div class="calendar-header">
 
-<button
-class="calendar-btn"
-onclick="changeMonth(-1)">
-‹
-</button>
+  <div>
 
-<div
-class="calendar-title"
-id="calendarTitle">
-</div>
+    <div class="card">
 
-<button
-class="calendar-btn"
-onclick="changeMonth(1)">
-›
-</button>
+      <div class="card-title">
 
-</div>
+        <h2>
+          آمار کلی این ماه
+        </h2>
 
+      </div>
 
-<div class="calendar-weekdays">
 
-<div class="calendar-weekday">ش</div>
-<div class="calendar-weekday">ی</div>
-<div class="calendar-weekday">د</div>
-<div class="calendar-weekday">س</div>
-<div class="calendar-weekday">چ</div>
-<div class="calendar-weekday">پ</div>
-<div class="calendar-weekday">ج</div>
+      <div class="stats">
 
-</div>
+        <div class="stat-box">
 
+          <div
+            class="big"
+            id="avgStat"
+          >
+            0%
+          </div>
 
-<div
-class="calendar-grid"
-id="calendarGrid">
-</div>
+          <small>
+            میانگین روزانه
+          </small>
 
-</div>
+        </div>
 
 
-<!-- FOUR WEEKS -->
+        <div class="stat-box">
 
-<div class="card">
+          <div
+            class="big"
+            id="activeDays"
+          >
+            0
+          </div>
 
-<div class="section-title">
-🗓️ چهار هفته‌ی ماه
-</div>
+          <small>
+            تعداد روزهای فعال
+          </small>
 
-<div
-class="weeks"
-id="weeks">
-</div>
+        </div>
 
-</div>
 
+        <div class="stat-box">
 
-<!-- WEEK CIRCLES -->
+          <div
+            class="big"
+            id="bestDay"
+          >
+            0%
+          </div>
 
-<div class="card">
+          <small>
+            بهترین روز
+          </small>
 
-<div class="section-title">
-⭕ پیشرفت هفتگی
-</div>
+        </div>
 
-<div
-class="week-circles"
-id="weekCircles">
-</div>
 
-</div>
+        <div class="stat-box">
 
+          <div
+            class="big"
+            id="worstDay"
+          >
+            0%
+          </div>
 
-<!-- LINE CHART -->
+          <small>
+            کمترین روز
+          </small>
 
-<div class="card">
+        </div>
 
-<div class="section-title">
-📈 نمودار خطی پیشرفت ماهانه
-</div>
+      </div>
 
-<div class="line-chart">
+    </div>
 
-<svg
-class="chart-svg"
-id="chartSvg"
-viewBox="0 0 1000 300"
-preserveAspectRatio="none">
 
-<defs>
+    <div class="tip">
 
-<linearGradient
-id="areaGradient"
-x1="0"
-x2="0"
-y1="0"
-y2="1">
+      <h3>
+        💡 نکته امروز
+      </h3>
 
-<stop
-offset="0%"
-stop-color="#8b6cff"
-stop-opacity=".30"/>
+      <p id="tipText">
+        امروز بهترین زمان برای ساختن یک قدم کوچک و واقعی است.
+      </p>
 
-<stop
-offset="100%"
-stop-color="#8b6cff"
-stop-opacity="0"/>
+    </div>
 
-</linearGradient>
+  </div>
 
-</defs>
+</section>
 
-<path
-id="areaPath"
-fill="url(#areaGradient)"
-stroke="none"/>
 
-<polyline
-id="chartLine"
-fill="none"
-stroke="#7c5cff"
-stroke-width="5"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+<div class="footer">
 
-<g id="chartPoints"></g>
-
-</svg>
-
-</div>
-
-<div
-class="chart-labels"
-id="chartLabels">
-</div>
-
-</div>
-
-
-<!-- DAILY QUOTE -->
-
-<div class="card quote-card">
-
-<div class="section-title">
-💬 سخن انگیزشی امروز
-</div>
-
-<div
-class="quote-loading"
-id="quoteLoading">
-
-در حال دریافت سخن انگیزشی امروز... ✨
-
-</div>
-
-<div
-class="quote"
-id="quote"
-style="display:none">
-</div>
-
-<div
-class="quote-author"
-id="quoteAuthor"
-style="display:none">
-</div>
-
-</div>
-
-
-<!-- EXTRA STATS -->
-
-<div class="card">
-
-<div class="section-title">
-🔥 آمار تو
-</div>
-
-<div class="extra-stats">
-
-<div class="stat">
-
-<div class="stat-icon">
-🔥
-</div>
-
-<div
-class="stat-number"
-id="streak">
-0
-</div>
-
-<div class="stat-label">
-بیشترین زنجیره
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-icon">
-📅
-</div>
-
-<div
-class="stat-number"
-id="activeDays">
-0
-</div>
-
-<div class="stat-label">
-روز فعال
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-icon">
-🎯
-</div>
-
-<div
-class="stat-number"
-id="bestDay">
-0%
-</div>
-
-<div class="stat-label">
-بهترین روز
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="save-note">
-
-💾 اطلاعاتت به صورت خودکار روی همین دستگاه ذخیره می‌شود.
+  💜 تو هر روز، بهتر از دیروزی... به خودت افتخار کن
 
 </div>
 
@@ -1009,42 +1178,124 @@ id="bestDay">
 <script>
 
 /* =========================
-   DATA
+   BASIC SETTINGS
+========================= */
+
+const faNum = n =>
+  String(n).replace(
+    /\d/g,
+    d => "۰۱۲۳۴۵۶۷۸۹"[d]
+  );
+
+
+const today = new Date();
+
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+
+
+/* =========================
+   HABITS
 ========================= */
 
 let habits =
-JSON.parse(
-localStorage.getItem("roozane_habits")
-) || [
+  JSON.parse(
+    localStorage.getItem(
+      "roozane_habits_v2"
+    ) || "null"
+  ) ||
 
-"🏃 ورزش ۳۰ دقیقه",
-"📖 مطالعه",
-"📗 خواندن قرآن",
-"💧 نوشیدن آب",
-"🧘 مدیتیشن",
-"📝 نوشتن روزانه",
-"⏰ صبح زود بیدار شدن",
-"🚫 بدون قند",
-"💡 یادگیری جدید",
-"❤️ شکرگزاری"
+  [
+    "🏃 ورزش ۳۰ دقیقه",
+    "📖 مطالعه",
+    "📗 خواندن قرآن",
+    "💧 نوشیدن آب",
+    "🧘 مدیتیشن",
+    "✏️ نوشتن روزانه",
+    "⏰ صبح زود بیدار شدن",
+    "🚫 بدون قند",
+    "💡 یادگیری جدید",
+    "❤️ شکرگزاری"
+  ];
+
+
+/* =========================
+   DATA
+========================= */
+
+let checks =
+  JSON.parse(
+    localStorage.getItem(
+      "roozane_checks_v2"
+    ) || "{}"
+  );
+
+
+let notes =
+  JSON.parse(
+    localStorage.getItem(
+      "roozane_notes_v2"
+    ) || "{}"
+  );
+
+
+/* =========================
+   MOTIVATIONAL QUOTES
+========================= */
+
+const quotes = [
+
+  [
+    "موفقیت حاصل کارهای کوچکِ تکرارشده در هر روز است.",
+    "جیم ران"
+  ],
+
+  [
+    "هر روز یک قدم کوچک، تو را به نسخه بهتر خودت نزدیک می‌کند.",
+    "روزانه من"
+  ],
+
+  [
+    "لازم نیست عالی باشی؛ فقط ادامه بده.",
+    "—"
+  ],
+
+  [
+    "آینده از کارهایی ساخته می‌شود که امروز انجام می‌دهی.",
+    "—"
+  ],
+
+  [
+    "شروع کوچک بهتر از منتظر ماندن برای شروع کامل است.",
+    "—"
+  ],
+
+  [
+    "به خودت اعتماد کن؛ تو از چیزی که فکر می‌کنی قوی‌تری.",
+    "—"
+  ],
+
+  [
+    "پیشرفت آهسته هم پیشرفت است.",
+    "—"
+  ]
 
 ];
 
 
-let checks =
-JSON.parse(
-localStorage.getItem("roozane_checks_v2")
-) || {};
+const tips = [
 
+  "امروز فقط روی یک عادت تمرکز کن و همان را کامل انجام بده.",
 
-let selectedDate = new Date();
+  "اگر انرژی کمی داری، نسخه کوچک‌تر عادتت را انجام بده؛ صفر بهتر نیست.",
 
-let calendarMonth =
-new Date(
-selectedDate.getFullYear(),
-selectedDate.getMonth(),
-1
-);
+  "یک تیک کوچک امروز می‌تواند زنجیره فردا را بسازد.",
+
+  "قبل از خواب، دو دقیقه برای برنامه فردا وقت بگذار.",
+
+  "پیشرفتت را با دیروز خودت مقایسه کن، نه با دیگران."
+
+];
 
 
 /* =========================
@@ -1053,50 +1304,31 @@ selectedDate.getMonth(),
 
 function save(){
 
-localStorage.setItem(
-"roozane_habits",
-JSON.stringify(habits)
-);
+  localStorage.setItem(
+    "roozane_habits_v2",
+    JSON.stringify(habits)
+  );
 
-localStorage.setItem(
-"roozane_checks_v2",
-JSON.stringify(checks)
-);
+  localStorage.setItem(
+    "roozane_checks_v2",
+    JSON.stringify(checks)
+  );
 
-}
-
-
-/* =========================
-   DATE KEY
-========================= */
-
-function dateKey(date){
-
-let y=date.getFullYear();
-
-let m=String(
-date.getMonth()+1
-).padStart(2,"0");
-
-let d=String(
-date.getDate()
-).padStart(2,"0");
-
-return `${y}-${m}-${d}`;
+  localStorage.setItem(
+    "roozane_notes_v2",
+    JSON.stringify(notes)
+  );
 
 }
 
 
 /* =========================
-   CHECK KEY
+   KEY
 ========================= */
 
-function checkKey(
-habit,
-date
-){
+function key(y,m,d,h){
 
-return dateKey(date)+"-"+habit;
+  return `${y}-${m+1}-${d}-${h}`;
 
 }
 
@@ -1105,14 +1337,11 @@ return dateKey(date)+"-"+habit;
    CHECK
 ========================= */
 
-function isChecked(
-habit,
-date
-){
+function isDone(y,m,d,h){
 
-return !!checks[
-checkKey(habit,date)
-];
+  return !!checks[
+    key(y,m,d,h)
+  ];
 
 }
 
@@ -1121,378 +1350,50 @@ checkKey(habit,date)
    TOGGLE
 ========================= */
 
-function toggleHabit(
-habit,
-date
-){
+function toggle(y,m,d,h){
 
-let key =
-checkKey(habit,date);
+  const k =
+    key(y,m,d,h);
 
-checks[key] =
-!checks[key];
+  checks[k] =
+    !checks[k];
 
-save();
+  save();
 
-render();
+  render();
 
 }
 
 
 /* =========================
-   ADD HABIT
+   DAY PERCENT
 ========================= */
 
-function addHabit(){
-
-habits.push(
-"✨ عادت جدید"
-);
-
-save();
-
-render();
-
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-function deleteHabit(index){
-
-if(
-!confirm(
-"این عادت حذف شود؟"
-)
-)return;
-
-habits.splice(index,1);
-
-save();
-
-render();
-
-}
-
-
-/* =========================
-   EDIT
-========================= */
-
-function editHabit(
-index,
-value
-){
-
-habits[index]=value;
-
-save();
-
-}
-
-
-/* =========================
-   HABITS LIST
-========================= */
-
-function renderHabits(){
-
-const list =
-document.getElementById(
-"habitList"
-);
-
-list.innerHTML="";
-
-habits.forEach(
-(habit,index)=>{
-
-let row =
-document.createElement(
-"div"
-);
-
-row.className="habit";
-
-row.innerHTML=`
-
-<input
-type="text"
-value="${escapeHTML(habit)}"
-onchange="
-editHabit(
-${index},
-this.value
-)
-">
-
-<button
-class="delete-btn"
-onclick="
-deleteHabit(${index})
-">
-
-🗑️
-
-</button>
-
-`;
-
-list.appendChild(row);
-
-});
-
-}
-
-
-/* =========================
-   FOUR WEEKS
-========================= */
-
-function renderWeeks(){
-
-const container =
-document.getElementById(
-"weeks"
-);
-
-container.innerHTML="";
-
-const dayNames =
-[
-"ش",
-"ی",
-"د",
-"س",
-"چ",
-"پ",
-"ج"
-];
-
-
-for(
-let week=0;
-week<4;
-week++
-){
-
-let weekBox =
-document.createElement(
-"div"
-);
-
-weekBox.className="week";
-
-let html=`
-
-<div class="week-title">
-هفته ${week+1}
-</div>
-
-<div class="habit-grid">
-
-`;
-
-
-/*
-هر هفته ۷ روز
-روزهای ۱ تا ۲۸ ماه
-*/
-
-for(
-let day=0;
-day<7;
-day++
-){
-
-let dayNumber =
-week*7+day+1;
-
-
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-dayNumber
-);
-
-
-html+=`
-
-<div>
-
-<div class="day-title">
-${dayNames[day]}
-</div>
-
-`;
-
-habits.forEach(
-(habit,habitIndex)=>{
-
-let active =
-isChecked(
-habit,
-date
-);
-
-html+=`
-
-<div
-class="habit-check ${
-active ? "active": ""
-}"
-onclick="
-toggleHabit(
-${habitIndex},
-new Date(
-${date.getFullYear()},
-${date.getMonth()},
-${date.getDate()}
-)
-)
-">
-
-${active ? "✓":""}
-
-</div>
-
-`;
-
-});
-
-html+=`
-
-</div>
-
-`;
-
-}
-
-html+=`
-
-</div>
-`;
-
-weekBox.innerHTML=html;
-
-container.appendChild(
-weekBox
-);
-
-}
-
-}
-
-
-/* =========================
-   WEEK PROGRESS
-========================= */
-
-function getWeekProgress(
-week
-){
-
-let total =
-habits.length*7;
-
-if(!total)return 0;
-
-let done=0;
-
-for(
-let day=0;
-day<7;
-day++
-){
-
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-week*7+day+1
-);
-
-habits.forEach(
-habit=>{
-
-if(
-isChecked(
-habit,
-date
-)
-){
-
-done++;
-
-}
-
-});
-
-}
-
-return Math.round(
-done/total*100
-);
-
-}
-
-
-/* =========================
-   WEEK CIRCLES
-========================= */
-
-function renderWeekCircles(){
-
-const box =
-document.getElementById(
-"weekCircles"
-);
-
-box.innerHTML="";
-
-for(
-let week=0;
-week<4;
-week++
-){
-
-let percent =
-getWeekProgress(week);
-
-let item =
-document.createElement(
-"div"
-);
-
-item.className=
-"week-circle-box";
-
-item.innerHTML=`
-
-<div
-class="small-circle"
-style="
---progress:${percent}%
-">
-
-<div class="small-circle-inner">
-${percent}%
-</div>
-
-</div>
-
-<p>
-هفته ${week+1}
-</p>
-
-`;
-
-box.appendChild(item);
-
-}
+function dayPercent(y,m,d){
+
+  if(habits.length === 0)
+    return 0;
+
+  let n = 0;
+
+  habits.forEach((_,h)=>{
+
+    if(
+      isDone(
+        y,
+        m,
+        d,
+        h
+      )
+    ){
+      n++;
+    }
+
+  });
+
+  return Math.round(
+    n / habits.length * 100
+  );
 
 }
 
@@ -1501,13 +1402,13 @@ box.appendChild(item);
    MONTH DAYS
 ========================= */
 
-function getDaysInMonth(){
+function monthDays(y,m){
 
-return new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth()+1,
-0
-).getDate();
+  return new Date(
+    y,
+    m + 1,
+    0
+  ).getDate();
 
 }
 
@@ -1516,128 +1417,488 @@ calendarMonth.getMonth()+1,
    MONTH PROGRESS
 ========================= */
 
-function getMonthProgress(){
+function monthProgress(){
 
-let days =
-getDaysInMonth();
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
 
-let total =
-habits.length*days;
+  let total =
+    days * habits.length;
 
-if(!total)return 0;
+  let done = 0;
 
-let done=0;
 
-for(
-let d=1;
-d<=days;
-d++
-){
+  for(
+    let d = 1;
+    d <= days;
+    d++
+  ){
 
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-d
-);
+    done += habits.reduce(
+      (sum,_,h)=>
+        sum +
+        (
+          isDone(
+            viewYear,
+            viewMonth,
+            d,
+            h
+          )
+          ? 1
+          : 0
+        ),
+      0
+    );
 
-habits.forEach(
-habit=>{
+  }
 
-if(
-isChecked(
-habit,
-date
-)
-){
 
-done++;
-
-}
-
-});
-
-}
-
-return Math.round(
-done/total*100
-);
+  return total
+    ? Math.round(
+        done / total * 100
+      )
+    : 0;
 
 }
 
 
 /* =========================
-   MONTH
+   WEEK PROGRESS
 ========================= */
 
-function renderMonth(){
+function weekPercent(w){
 
-let percent =
-getMonthProgress();
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
 
-let circle =
-document.getElementById(
-"monthCircle"
-);
+  const start =
+    w * 7 + 1;
 
-circle.style.setProperty(
-"--progress",
-percent+"%"
-);
-
-document.getElementById(
-"monthPercent"
-).innerText =
-percent+"%";
+  const end =
+    Math.min(
+      start + 6,
+      days
+    );
 
 
-let text =
-document.getElementById(
-"monthDescription"
-);
+  if(
+    start > days ||
+    habits.length === 0
+  ){
+    return 0;
+  }
 
 
-if(percent===0){
+  let total = 0;
+  let done = 0;
 
-text.innerText =
-"هنوز اولین قدم را برنداشتی؛ شروع کن! 🌱";
+
+  for(
+    let d = start;
+    d <= end;
+    d++
+  ){
+
+    for(
+      let h = 0;
+      h < habits.length;
+      h++
+    ){
+
+      total++;
+
+      if(
+        isDone(
+          viewYear,
+          viewMonth,
+          d,
+          h
+        )
+      ){
+        done++;
+      }
+
+    }
+
+  }
+
+
+  return total
+    ? Math.round(
+        done / total * 100
+      )
+    : 0;
 
 }
 
-else if(percent<30){
 
-text.innerText =
-"شروع کردی! همین قدم‌های کوچک خیلی مهم‌اند. 💜";
+/* =========================
+   MAIN RENDER
+========================= */
 
-}
+function render(){
 
-else if(percent<60){
+  renderHeader();
 
-text.innerText =
-"عالی پیش می‌ری! داری عادت‌های خوب می‌سازی. 🌷";
+  renderHabits();
 
-}
+  renderCalendar();
 
-else if(percent<80){
+  renderLineChart();
 
-text.innerText =
-"فوق‌العاده‌ای! بیشتر مسیر را پشت سر گذاشتی. 🔥";
+  renderStats();
 
-}
+  renderQuote();
 
-else if(percent<100){
-
-text.innerText =
-"تقریباً کاملش کردی! فقط کمی دیگر مانده. 🚀";
+  renderNotes();
 
 }
 
-else{
 
-text.innerText =
-"یک ماه فوق‌العاده ساختی! 🏆✨";
+/* =========================
+   HEADER
+========================= */
+
+function renderHeader(){
+
+  const fmt =
+    new Intl.DateTimeFormat(
+      "fa-IR",
+      {
+        year:"numeric",
+        month:"long"
+      }
+    );
+
+
+  document
+    .getElementById(
+      "dateTitle"
+    )
+    .textContent =
+      fmt.format(
+        new Date(
+          viewYear,
+          viewMonth,
+          1
+        )
+      );
+
+
+  const p =
+    monthProgress();
+
+
+  document
+    .getElementById(
+      "overallPercent"
+    )
+    .textContent =
+      faNum(p) + "%";
+
+
+  document
+    .getElementById(
+      "overallRing"
+    )
+    .style
+    .setProperty(
+      "--p",
+      p + "%"
+    );
+
+
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
+
+
+  let done = 0;
+
+
+  for(
+    let d = 1;
+    d <= days;
+    d++
+  ){
+
+    for(
+      let h = 0;
+      h < habits.length;
+      h++
+    ){
+
+      if(
+        isDone(
+          viewYear,
+          viewMonth,
+          d,
+          h
+        )
+      ){
+
+        done++;
+
+      }
+
+    }
+
+  }
+
+
+  document
+    .getElementById(
+      "doneCount"
+    )
+    .textContent =
+      faNum(done);
+
+
+  document
+    .getElementById(
+      "possibleCount"
+    )
+    .textContent =
+      faNum(
+        days * habits.length
+      );
 
 }
+
+
+/* =========================
+   HABITS BOARD
+========================= */
+
+function renderHabits(){
+
+  const board =
+    document.getElementById(
+      "habitBoard"
+    );
+
+
+  board.innerHTML =
+    '<div class="habit-names">' +
+    '<div style="height:32px"></div>' +
+    '</div>';
+
+
+  const names =
+    board.firstChild;
+
+
+  habits.forEach(
+    (h,i)=>{
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "habit-name";
+
+
+      row.innerHTML = `
+
+        <span style="flex:1">
+          ${escapeHtml(h)}
+        </span>
+
+        <button
+          class="small-btn"
+          onclick="removeHabit(${i})"
+        >
+          حذف
+        </button>
+
+      `;
+
+
+      names.appendChild(row);
+
+    }
+  );
+
+
+  const dayNames =
+    [
+      "ش",
+      "ی",
+      "د",
+      "س",
+      "چ",
+      "پ",
+      "ج"
+    ];
+
+
+  for(
+    let w = 0;
+    w < 4;
+    w++
+  ){
+
+    const col =
+      document.createElement(
+        "div"
+      );
+
+
+    col.className =
+      `week-col w${w+1}`;
+
+
+    let s = `
+
+      <div class="week-title">
+        هفته ${faNum(w+1)}
+      </div>
+
+      <div class="days-head">
+
+    `;
+
+
+    dayNames.forEach(
+      x => {
+
+        s += `
+          <span>${x}</span>
+        `;
+
+      }
+    );
+
+
+    s += `
+      </div>
+    `;
+
+
+    const start =
+      w * 7 + 1;
+
+
+    const days =
+      monthDays(
+        viewYear,
+        viewMonth
+      );
+
+
+    habits.forEach(
+      (_,h)=>{
+
+        s += `
+          <div class="check-row">
+        `;
+
+
+        for(
+          let i = 0;
+          i < 7;
+          i++
+        ){
+
+          const d =
+            start + i;
+
+
+          const exists =
+            d <= days;
+
+
+          const done =
+            exists &&
+            isDone(
+              viewYear,
+              viewMonth,
+              d,
+              h
+            );
+
+
+          s += `
+
+            <button
+              class="check ${done ? "done" : ""}"
+              ${
+                exists
+                  ? `onclick="toggle(${viewYear},${viewMonth},${d},${h})"`
+                  : "disabled"
+              }
+            >
+              ${done ? "✓" : ""}
+            </button>
+
+          `;
+
+        }
+
+
+        s += `
+          </div>
+        `;
+
+      }
+    );
+
+
+    const p =
+      weekPercent(w);
+
+
+    s += `
+
+      <div
+        class="week-ring"
+        style="--p:${p}%"
+      >
+
+        <span>
+          ${faNum(p)}%
+        </span>
+
+      </div>
+
+      <div class="week-total">
+
+        ${faNum(
+          Math.round(
+            p *
+            habits.length *
+            7 /
+            100
+          )
+        )}
+
+        /
+
+        ${faNum(
+          habits.length * 7
+        )}
+
+      </div>
+
+    `;
+
+
+    col.innerHTML = s;
+
+    board.appendChild(col);
+
+  }
 
 }
 
@@ -1648,764 +1909,763 @@ text.innerText =
 
 function renderCalendar(){
 
-let year =
-calendarMonth.getFullYear();
-
-let month =
-calendarMonth.getMonth();
-
-let title =
-new Intl.DateTimeFormat(
-"fa-IR",
-{
-year:"numeric",
-month:"long"
-}
-).format(
-calendarMonth
-);
-
-document.getElementById(
-"calendarTitle"
-).innerText =
-title;
+  const el =
+    document.getElementById(
+      "calendar"
+    );
 
 
-let grid =
-document.getElementById(
-"calendarGrid"
-);
-
-grid.innerHTML="";
+  el.innerHTML = "";
 
 
-/*
-روز اول ماه
-*/
-
-let firstDay =
-new Date(
-year,
-month,
-1
-);
-
-
-/*
-تبدیل یکشنبه = ۰
-به شنبه = ۰
-*/
-
-let start =
-(firstDay.getDay()+1)%7;
+  const names =
+    [
+      "ش",
+      "ی",
+      "د",
+      "س",
+      "چ",
+      "پ",
+      "ج"
+    ];
 
 
-for(
-let i=0;
-i<start;
-i++
-){
+  names.forEach(
+    n => {
 
-let empty =
-document.createElement(
-"div"
-);
+      el.innerHTML += `
+        <div class="cal-head">
+          ${n}
+        </div>
+      `;
 
-empty.className=
-"calendar-day empty";
-
-grid.appendChild(empty);
-
-}
+    }
+  );
 
 
-let days =
-new Date(
-year,
-month+1,
-0
-).getDate();
+  const first =
+    new Date(
+      viewYear,
+      viewMonth,
+      1
+    );
 
 
-let today =
-dateKey(
-new Date()
-);
+  let start =
+    (
+      first.getDay() + 1
+    ) % 7;
 
 
-for(
-let d=1;
-d<=days;
-d++
-){
+  for(
+    let i = 0;
+    i < start;
+    i++
+  ){
 
-let date =
-new Date(
-year,
-month,
-d
-);
+    el.innerHTML += `
+      <div class="cal-day empty"></div>
+    `;
 
-let done=0;
-
-habits.forEach(
-habit=>{
-
-if(
-isChecked(
-habit,
-date
-)
-){
-
-done++;
-
-}
-
-});
+  }
 
 
-let percent =
-habits.length
-?
-Math.round(
-done/habits.length*100
-)
-:0;
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
 
 
-let cell =
-document.createElement(
-"div"
-);
+  for(
+    let d = 1;
+    d <= days;
+    d++
+  ){
 
-cell.className=
-"calendar-day";
-
-
-if(
-dateKey(date)===today
-){
-
-cell.classList.add(
-"today"
-);
-
-}
+    const p =
+      dayPercent(
+        viewYear,
+        viewMonth,
+        d
+      );
 
 
-cell.onclick=()=>{
-
-selectedDate =
-date;
-
-};
+    const active =
+      p > 0;
 
 
-cell.innerHTML=`
+    const isToday =
+      viewYear === today.getFullYear() &&
+      viewMonth === today.getMonth() &&
+      d === today.getDate();
 
-<div class="calendar-number">
-${d}
-</div>
 
-<div class="calendar-percent">
-${percent}%
-</div>
+    el.innerHTML += `
 
-${
-percent>0
-?
-'<div class="calendar-dot"></div>'
-:""
-}
+      <div
+        class="cal-day ${isToday ? "today" : ""}"
+      >
 
-`;
+        <div class="cal-num">
+          ${faNum(d)}
+        </div>
 
-grid.appendChild(cell);
+        <div class="cal-percent">
+          ${faNum(p)}%
+        </div>
 
-}
+        <span
+          class="cal-dot ${
+            active ? "active" : ""
+          }"
+        ></span>
+
+      </div>
+
+    `;
+
+  }
 
 }
 
 
 /* =========================
-   CHANGE MONTH
+   MONTHLY LINE CHART
 ========================= */
 
-function changeMonth(
-amount
-){
+function renderLineChart(){
 
-calendarMonth =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth()+amount,
-1
-);
+  const svg =
+    document.getElementById(
+      "lineChart"
+    );
 
-render();
+
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
+
+
+  const vals = [];
+
+
+  for(
+    let d = 1;
+    d <= days;
+    d++
+  ){
+
+    vals.push(
+      dayPercent(
+        viewYear,
+        viewMonth,
+        d
+      )
+    );
+
+  }
+
+
+  const W = 600;
+  const H = 190;
+  const L = 35;
+  const R = 10;
+  const T = 10;
+  const B = 28;
+
+  const iw =
+    W - L - R;
+
+  const ih =
+    H - T - B;
+
+
+  let out = "";
+
+
+  /* GRID */
+
+  [
+    0,
+    25,
+    50,
+    75,
+    100
+  ].forEach(
+    v => {
+
+      const y =
+        T +
+        ih -
+        (v / 100) * ih;
+
+
+      out += `
+
+        <line
+          x1="${L}"
+          x2="${W-R}"
+          y1="${y}"
+          y2="${y}"
+          stroke="#eeeaf5"
+          stroke-width="1"
+        />
+
+        <text
+          x="${L-7}"
+          y="${y+4}"
+          text-anchor="end"
+          font-size="11"
+          fill="#77809d"
+        >
+          ${v}%
+        </text>
+
+      `;
+
+    }
+  );
+
+
+  /* POINTS */
+
+  const pts =
+    vals.map(
+      (v,i) => [
+
+        L +
+        (
+          i /
+          Math.max(
+            days - 1,
+            1
+          )
+        ) *
+        iw,
+
+        T +
+        ih -
+        (v / 100) *
+        ih
+
+      ]
+    );
+
+
+  const poly =
+    pts
+      .map(
+        p => p.join(",")
+      )
+      .join(" ");
+
+
+  out += `
+
+    <polyline
+      points="${poly}"
+      fill="none"
+      stroke="#7c4dff"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+  `;
+
+
+  pts.forEach(
+    (p,i) => {
+
+      if(
+        i % 5 === 0 ||
+        i === days - 1
+      ){
+
+        out += `
+
+          <text
+            x="${p[0]}"
+            y="${H-7}"
+            text-anchor="middle"
+            font-size="10"
+            fill="#77809d"
+          >
+            ${faNum(i+1)}
+          </text>
+
+        `;
+
+      }
+
+
+      out += `
+
+        <circle
+          cx="${p[0]}"
+          cy="${p[1]}"
+          r="3.2"
+          fill="#fff"
+          stroke="#7c4dff"
+          stroke-width="2"
+        />
+
+      `;
+
+    }
+  );
+
+
+  svg.innerHTML =
+    out;
 
 }
 
 
 /* =========================
-   MONTH LINE CHART
-========================= */
-
-function renderChart(){
-
-let days =
-getDaysInMonth();
-
-let points=[];
-
-for(
-let d=1;
-d<=days;
-d++
-){
-
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-d
-);
-
-let done=0;
-
-habits.forEach(
-habit=>{
-
-if(
-isChecked(
-habit,
-date
-)
-){
-
-done++;
-
-}
-
-});
-
-let percent =
-habits.length
-?
-done/habits.length*100
-:0;
-
-points.push(
-percent
-);
-
-}
-
-
-let svgWidth=1000;
-
-let svgHeight=300;
-
-let padX=30;
-
-let padY=25;
-
-let usableWidth =
-svgWidth-padX*2;
-
-let usableHeight =
-svgHeight-padY*2;
-
-
-let coords =
-points.map(
-(percent,index)=>{
-
-let x =
-days===1
-? svgWidth/2
-:
-padX+
-(index/(days-1))*usableWidth;
-
-let y =
-svgHeight-padY-
-(percent/100)*usableHeight;
-
-return [x,y];
-
-});
-
-
-let polyline =
-document.getElementById(
-"chartLine"
-);
-
-polyline.setAttribute(
-"points",
-coords
-.map(p=>p.join(","))
-.join(" ")
-);
-
-
-let area =
-document.getElementById(
-"areaPath"
-);
-
-
-let areaPoints =
-coords
-.map(
-p=>p.join(",")
-)
-.join(" ");
-
-
-let firstX =
-coords[0][0];
-
-let lastX =
-coords[coords.length-1][0];
-
-
-area.setAttribute(
-"d",
-`
-M ${firstX} ${svgHeight-padY}
-L ${areaPoints}
-L ${lastX} ${svgHeight-padY}
-Z
-`
-);
-
-
-/* نقاط */
-
-let pointGroup =
-document.getElementById(
-"chartPoints"
-);
-
-pointGroup.innerHTML="";
-
-
-coords.forEach(
-(point,index)=>{
-
-let circle =
-document.createElementNS(
-"http://www.w3.org/2000/svg",
-"circle"
-);
-
-circle.setAttribute(
-"cx",
-point[0]
-);
-
-circle.setAttribute(
-"cy",
-point[1]
-);
-
-circle.setAttribute(
-"r",
-"6"
-);
-
-circle.setAttribute(
-"fill",
-"#7c5cff"
-);
-
-circle.setAttribute(
-"stroke",
-"white"
-);
-
-circle.setAttribute(
-"stroke-width",
-"3"
-);
-
-pointGroup.appendChild(
-circle
-);
-
-});
-
-
-/* labels */
-
-let labels =
-document.getElementById(
-"chartLabels"
-);
-
-labels.innerHTML="";
-
-let labelCount =
-Math.min(days,7);
-
-let step =
-Math.max(
-1,
-Math.floor(
-days/(labelCount-1)
-)
-);
-
-for(
-let d=1;
-d<=days;
-d+=step
-){
-
-let span =
-document.createElement(
-"span"
-);
-
-span.innerText=d;
-
-labels.appendChild(span);
-
-}
-
-}
-
-
-/* =========================
-   SUMMARY
-========================= */
-
-function renderSummary(){
-
-let days =
-getDaysInMonth();
-
-let total =
-habits.length*days;
-
-let done=0;
-
-for(
-let d=1;
-d<=days;
-d++
-){
-
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-d
-);
-
-habits.forEach(
-habit=>{
-
-if(
-isChecked(
-habit,
-date
-)
-){
-
-done++;
-
-}
-
-});
-
-}
-
-
-let percent =
-total
-?
-Math.round(done/total*100)
-:0;
-
-
-document.getElementById(
-"totalDone"
-).innerText=done;
-
-
-document.getElementById(
-"totalPossible"
-).innerText=total;
-
-
-document.getElementById(
-"overallPercent"
-).innerText=
-percent+"%";
-
-}
-
-
-/* =========================
-   STATS
+   STATISTICS
 ========================= */
 
 function renderStats(){
 
-let days =
-getDaysInMonth();
-
-let activeDays=0;
-
-let bestDay=0;
-
-let currentStreak=0;
-
-let bestStreak=0;
+  const days =
+    monthDays(
+      viewYear,
+      viewMonth
+    );
 
 
-for(
-let d=1;
-d<=days;
-d++
-){
-
-let date =
-new Date(
-calendarMonth.getFullYear(),
-calendarMonth.getMonth(),
-d
-);
-
-let done=0;
-
-habits.forEach(
-habit=>{
-
-if(
-isChecked(
-habit,
-date
-)
-){
-
-done++;
-
-}
-
-});
+  const vals = [];
 
 
-let percent =
-habits.length
-?
-Math.round(
-done/habits.length*100
-)
-:0;
+  for(
+    let d = 1;
+    d <= days;
+    d++
+  ){
+
+    vals.push(
+      dayPercent(
+        viewYear,
+        viewMonth,
+        d
+      )
+    );
+
+  }
 
 
-if(done>0){
-
-activeDays++;
-
-currentStreak++;
-
-bestStreak =
-Math.max(
-bestStreak,
-currentStreak
-);
-
-}else{
-
-currentStreak=0;
-
-}
+  const avg =
+    Math.round(
+      vals.reduce(
+        (a,b) => a+b,
+        0
+      ) /
+      (vals.length || 1)
+    );
 
 
-bestDay =
-Math.max(
-bestDay,
-percent
-);
-
-}
+  const active =
+    vals.filter(
+      x => x > 0
+    ).length;
 
 
-document.getElementById(
-"streak"
-).innerText=
-bestStreak;
+  document
+    .getElementById(
+      "avgStat"
+    )
+    .textContent =
+      faNum(avg) + "%";
 
 
-document.getElementById(
-"activeDays"
-).innerText=
-activeDays;
+  document
+    .getElementById(
+      "activeDays"
+    )
+    .textContent =
+      faNum(active);
 
 
-document.getElementById(
-"bestDay"
-).innerText=
-bestDay+"%";
+  document
+    .getElementById(
+      "bestDay"
+    )
+    .textContent =
+      faNum(
+        Math.max(
+          0,
+          ...vals
+        )
+      ) + "%";
+
+
+  document
+    .getElementById(
+      "worstDay"
+    )
+    .textContent =
+      faNum(
+        Math.min(
+          0,
+          ...vals
+        )
+      ) + "%";
+
+
+  renderStreak();
 
 }
 
 
 /* =========================
-   DAILY ONLINE QUOTE
+   STREAK
 ========================= */
 
-async function loadDailyQuote(){
+function dateDone(d){
 
-const loading =
-document.getElementById(
-"quoteLoading"
-);
-
-const quote =
-document.getElementById(
-"quote"
-);
-
-const author =
-document.getElementById(
-"quoteAuthor"
-);
-
-
-/*
-هر روز بر اساس تاریخ
-یک درخواست جدید
-*/
-
-try{
-
-const response =
-await fetch(
-"https://api.quotable.io/random?tags=motivational"
-);
-
-if(!response.ok)
-throw new Error();
-
-
-const data =
-await response.json();
-
-
-quote.innerText =
-"«"+data.content+"»";
-
-author.innerText =
-"— "+data.author;
-
-loading.style.display="none";
-
-quote.style.display="block";
-
-author.style.display="block";
+  return (
+    dayPercent(
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate()
+    ) === 100 &&
+    habits.length > 0
+  );
 
 }
 
-catch(error){
 
-/*
-اگر اینترنت یا API
-در دسترس نبود
-سخن جایگزین نمایش داده می‌شود.
-*/
+function renderStreak(){
 
-const fallback=[
-
-"هر روز یک قدم کوچک، تو را به رؤیایت نزدیک‌تر می‌کند. 🌱",
-
-"به خودت ایمان داشته باش؛ تو از چیزی که فکر می‌کنی قوی‌تری. 💜",
-
-"موفقیت نتیجه‌ی تکرار کارهای کوچک و درست است. ✨",
-
-"امروز می‌تواند شروع یک اتفاق فوق‌العاده باشد. 🌷",
-
-"آرام پیش برو، اما هیچ‌وقت متوقف نشو. 🚀",
-
-"تو لازم نیست کامل باشی؛ فقط ادامه بده. ❤️",
-
-"آینده‌ات با کارهایی که امروز انجام می‌دهی ساخته می‌شود. 🌸"
-
-];
+  let cur = 0;
+  let best = 0;
 
 
-let today =
-new Date();
+  /* CURRENT STREAK */
 
-let index =
-(
-today.getFullYear()+
-today.getMonth()+
-today.getDate()
-)%fallback.length;
+  for(
+    let i = 0;
+    i < 370;
+    i++
+  ){
+
+    let d =
+      new Date(today);
 
 
-loading.style.display="none";
+    d.setDate(
+      d.getDate() - i
+    );
 
-quote.style.display="block";
 
-author.style.display="block";
+    if(
+      dateDone(d)
+    ){
 
-quote.innerText=
-"«"+fallback[index]+"»";
+      cur++;
 
-author.innerText=
-"— روزانه من";
+    }else{
 
-}
+      break;
+
+    }
+
+  }
+
+
+  /* BEST STREAK */
+
+  let run = 0;
+
+
+  for(
+    let i = 369;
+    i >= 0;
+    i--
+  ){
+
+    let d =
+      new Date(today);
+
+
+    d.setDate(
+      d.getDate() - i
+    );
+
+
+    if(
+      dateDone(d)
+    ){
+
+      run++;
+
+      best =
+        Math.max(
+          best,
+          run
+        );
+
+    }else{
+
+      run = 0;
+
+    }
+
+  }
+
+
+  document
+    .getElementById(
+      "streakNum"
+    )
+    .textContent =
+      faNum(cur);
+
+
+  document
+    .getElementById(
+      "bestStreak"
+    )
+    .textContent =
+      faNum(best) +
+      " روز";
 
 }
 
 
 /* =========================
-   ESCAPE
+   DAILY QUOTE
 ========================= */
 
-function escapeHTML(text){
+function renderQuote(){
 
-return String(text)
+  const start =
+    new Date(
+      today.getFullYear(),
+      0,
+      0
+    );
 
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+  const diff =
+    today - start;
+
+
+  const day =
+    Math.floor(
+      diff /
+      86400000
+    );
+
+
+  const q =
+    quotes[
+      day %
+      quotes.length
+    ];
+
+
+  document
+    .getElementById(
+      "quoteText"
+    )
+    .textContent =
+      q[0];
+
+
+  document
+    .getElementById(
+      "quoteAuthor"
+    )
+    .textContent =
+      "— " + q[1];
+
+
+  document
+    .getElementById(
+      "tipText"
+    )
+    .textContent =
+      tips[
+        day %
+        tips.length
+      ];
 
 }
 
 
 /* =========================
-   RENDER
+   NOTES
 ========================= */
 
-function render(){
+function renderNotes(){
 
-renderHabits();
+  const k =
+    `${viewYear}-${viewMonth}`;
 
-renderWeeks();
 
-renderWeekCircles();
+  const el =
+    document.getElementById(
+      "notes"
+    );
 
-renderMonth();
 
-renderCalendar();
+  el.value =
+    notes[k] || "";
 
-renderChart();
 
-renderSummary();
+  el.oninput =
+    () => {
 
-renderStats();
+      notes[k] =
+        el.value;
+
+      save();
+
+    };
+
+}
+
+
+/* =========================
+   ADD HABIT
+========================= */
+
+function addHabit(){
+
+  habits.push(
+    "✨ عادت جدید"
+  );
+
+  save();
+
+  render();
+
+}
+
+
+/* =========================
+   REMOVE HABIT
+========================= */
+
+function removeHabit(i){
+
+  if(
+    confirm(
+      "این عادت حذف شود؟"
+    )
+  ){
+
+    habits.splice(
+      i,
+      1
+    );
+
+    save();
+
+    render();
+
+  }
+
+}
+
+
+/* =========================
+   MONTH NAVIGATION
+========================= */
+
+function changeMonth(n){
+
+  viewMonth += n;
+
+
+  if(
+    viewMonth < 0
+  ){
+
+    viewMonth = 11;
+
+    viewYear--;
+
+  }
+
+
+  if(
+    viewMonth > 11
+  ){
+
+    viewMonth = 0;
+
+    viewYear++;
+
+  }
+
+
+  render();
+
+}
+
+
+/* =========================
+   TODAY
+========================= */
+
+function goToday(){
+
+  viewYear =
+    today.getFullYear();
+
+  viewMonth =
+    today.getMonth();
+
+  render();
+
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+
+  document.body.style.background =
+    document.body.classList.contains(
+      "dark"
+    )
+      ? "#171522"
+      : "";
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(s){
+
+  return String(s)
+    .replace(
+      /[&<>"']/g,
+      m =>
+        ({
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+        }[m])
+    );
 
 }
 
@@ -2415,8 +2675,6 @@ renderStats();
 ========================= */
 
 render();
-
-loadDailyQuote();
 
 </script>
 
