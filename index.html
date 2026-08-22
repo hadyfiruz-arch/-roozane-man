@@ -3,2680 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7c4dff">
-<title>روزانه من | Habit Tracker</title>
 
-<style>
-:root{
-  --purple:#7c4dff;
-  --purple2:#9b6cff;
-  --purple-soft:#f1ebff;
-  --green:#27b889;
-  --green-soft:#e9f8f2;
-  --orange:#ff9f2f;
-  --orange-soft:#fff3df;
-  --pink:#f34f86;
-  --pink-soft:#fff0f5;
-  --blue:#4385f5;
-  --text:#1d2554;
-  --muted:#77809d;
-  --border:#e9e7f3;
-  --bg:#f8f7fc;
-  --card:#fff;
-  --shadow:0 8px 28px rgba(49,42,95,.07);
-}
+<title>Habit Tracker Pro</title>
 
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent
-}
+<link rel="manifest" href="manifest.json">
 
-body{
-  margin:0;
-  background:linear-gradient(135deg,#fbfaff,#f7f8ff);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",
-  Tahoma,Arial,sans-serif
-}
+<link rel="stylesheet" href="style.css">
 
-button,input,textarea{
-  font:inherit
-}
-
-button{
-  cursor:pointer
-}
-
-.container{
-  max-width:1250px;
-  margin:auto;
-  padding:16px 18px 35px
-}
-
-.card{
-  background:rgba(255,255,255,.94);
-  border:1px solid var(--border);
-  border-radius:22px;
-  box-shadow:var(--shadow);
-  padding:18px
-}
-
-/* HEADER */
-
-.topbar{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:16px;
-  margin-bottom:14px
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px
-}
-
-.logo{
-  width:43px;
-  height:43px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  color:#fff;
-  background:linear-gradient(135deg,#7442ee,#a778ff);
-  font-size:25px;
-  font-weight:900;
-  box-shadow:0 7px 18px #7c4dff33
-}
-
-.brand h1{
-  font-size:24px;
-  margin:0;
-  font-weight:900
-}
-
-.brand p{
-  margin:2px 0 0;
-  color:var(--muted);
-  font-size:12px
-}
-
-.date-nav{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:18px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:9px 14px;
-  background:#fff;
-  min-width:265px
-}
-
-.date-nav button,
-.icon-btn{
-  border:0;
-  background:transparent;
-  color:var(--text);
-  font-size:20px
-}
-
-.date-title{
-  font-weight:800;
-  white-space:nowrap
-}
-
-.actions{
-  display:flex;
-  justify-content:flex-start;
-  gap:8px
-}
-
-.action{
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:12px;
-  padding:10px 15px;
-  color:var(--text)
-}
-
-.action.primary{
-  background:linear-gradient(135deg,#7442ee,#9862f7);
-  color:#fff;
-  border:0
-}
-
-/* DASHBOARD */
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:1.1fr 1.45fr .72fr;
-  gap:14px
-}
-
-.progress-card{
-  display:flex;
-  align-items:center;
-  gap:25px
-}
-
-.ring{
-  width:155px;
-  height:155px;
-  border-radius:50%;
-  flex:0 0 auto;
-  display:grid;
-  place-items:center;
-  background:conic-gradient(var(--purple) var(--p),#e9e3fb 0);
-  position:relative
-}
-
-.ring:after{
-  content:"";
-  width:116px;
-  height:116px;
-  background:#fff;
-  border-radius:50%;
-  position:absolute
-}
-
-.ring-inner{
-  position:relative;
-  z-index:2;
-  text-align:center
-}
-
-.ring-num{
-  font-size:28px;
-  font-weight:900
-}
-
-.ring-label{
-  font-size:12px;
-  color:var(--muted)
-}
-
-.metric-list{
-  display:grid;
-  gap:17px
-}
-
-.metric{
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-
-.metric-icon{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:var(--purple-soft)
-}
-
-.metric strong{
-  display:block;
-  font-size:20px
-}
-
-.metric span{
-  font-size:11px;
-  color:var(--muted)
-}
-
-/* LINE CHART */
-
-.chart-card{
-  min-height:240px
-}
-
-.card-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:10px
-}
-
-.card-title h2{
-  font-size:16px;
-  margin:0;
-  font-weight:900
-}
-
-.title-icon{
-  color:var(--purple);
-  font-size:19px
-}
-
-.line-chart{
-  width:100%;
-  height:175px;
-  display:block
-}
-
-/* STREAK */
-
-.streak{
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  justify-content:center
-}
-
-.fire{
-  font-size:45px
-}
-
-.streak-num{
-  font-size:31px;
-  font-weight:900
-}
-
-.streak p{
-  color:var(--muted);
-  margin:3px 0 15px;
-  font-size:13px
-}
-
-.trophy{
-  background:#fff7ee;
-  border:1px solid #ffe6c8;
-  border-radius:14px;
-  padding:13px;
-  font-size:12px
-}
-
-.trophy b{
-  display:block;
-  font-size:17px;
-  margin-top:5px
-}
-
-/* QUOTE + NOTES */
-
-.mid-grid{
-  display:grid;
-  grid-template-columns:.72fr 1.5fr;
-  gap:14px;
-  margin-top:14px
-}
-
-.quote{
-  min-height:190px;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  justify-content:center
-}
-
-.quote h3{
-  font-size:14px;
-  margin:0 0 10px
-}
-
-.quote-text{
-  font-size:17px;
-  line-height:1.9;
-  margin:0 18px
-}
-
-.quote-author{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:8px
-}
-
-.quote-mark{
-  font-size:45px;
-  color:#d9c9ff;
-  line-height:.5
-}
-
-.notes textarea{
-  width:100%;
-  min-height:115px;
-  border:1px solid #e5e2ee;
-  border-radius:13px;
-  padding:14px;
-  outline:none;
-  resize:vertical;
-  background:#fcfcff;
-  color:var(--text);
-  line-height:1.8
-}
-
-.save-status{
-  color:var(--green);
-  font-size:11px;
-  margin-top:7px;
-  text-align:left
-}
-
-/* HABITS */
-
-.habits-card{
-  margin-top:14px;
-  overflow:hidden
-}
-
-.habit-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between
-}
-
-.legend{
-  display:flex;
-  gap:15px;
-  font-size:11px;
-  color:var(--muted);
-  flex-wrap:wrap
-}
-
-.legend i{
-  display:inline-block;
-  width:10px;
-  height:10px;
-  border-radius:3px;
-  margin-left:4px
-}
-
-.l1{background:var(--purple)}
-.l2{background:var(--green)}
-.l3{background:var(--orange)}
-.l4{background:var(--pink)}
-
-.habit-board{
-  display:grid;
-  grid-template-columns:185px repeat(4,minmax(145px,1fr));
-  gap:7px;
-  margin-top:10px
-}
-
-.habit-names{
-  padding-top:42px
-}
-
-.habit-name{
-  height:39px;
-  display:flex;
-  align-items:center;
-  border-bottom:1px solid #f0eef5;
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  padding:0 7px
-}
-
-.week-col{
-  border-radius:14px;
-  padding:10px 7px 8px
-}
-
-.w1{background:var(--purple-soft)}
-.w2{background:var(--green-soft)}
-.w3{background:var(--orange-soft)}
-.w4{background:var(--pink-soft)}
-
-.week-title{
-  text-align:center;
-  font-weight:900;
-  font-size:13px;
-  margin-bottom:8px
-}
-
-.days-head,
-.checks-row{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:5px
-}
-
-.days-head span{
-  text-align:center;
-  font-size:10px;
-  color:var(--muted)
-}
-
-.check-row{
-  height:39px;
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:5px;
-  align-items:center
-}
-
-.check{
-  width:19px;
-  height:19px;
-  border-radius:5px;
-  border:1.5px solid currentColor;
-  background:transparent;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  font-size:12px;
-  font-weight:900;
-  transition:.15s
-}
-
-.w1 .check{color:#8355e8}
-.w2 .check{color:#2aaa83}
-.w3 .check{color:#f29a23}
-.w4 .check{color:#ee4f83}
-
-.check.done{
-  color:#fff!important
-}
-
-.w1 .check.done{background:#7c4dff}
-.w2 .check.done{background:#27b889}
-.w3 .check.done{background:#ff9f2f}
-.w4 .check.done{background:#f34f86}
-
-.week-ring{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  margin:13px auto 2px;
-  background:conic-gradient(currentColor var(--p),#fff 0);
-  position:relative
-}
-
-.week-ring:after{
-  content:"";
-  width:60px;
-  height:60px;
-  background:#fff;
-  border-radius:50%;
-  position:absolute
-}
-
-.week-ring span{
-  position:relative;
-  z-index:2;
-  font-weight:900;
-  font-size:13px
-}
-
-.w1 .week-ring{color:#7c4dff}
-.w2 .week-ring{color:#27b889}
-.w3 .week-ring{color:#ff9f2f}
-.w4 .week-ring{color:#f34f86}
-
-.week-total{
-  text-align:center;
-  font-size:10px;
-  color:var(--muted)
-}
-
-.add-habit{
-  margin-top:12px;
-  width:100%;
-  border:1px dashed #cfc5eb;
-  background:#faf8ff;
-  color:#7049db;
-  border-radius:12px;
-  padding:10px
-}
-
-.habit-tools{
-  display:flex;
-  gap:6px
-}
-
-.small-btn{
-  border:0;
-  background:#f3efff;
-  color:#7049db;
-  border-radius:8px;
-  padding:6px 9px;
-  font-size:11px
-}
-
-/* CALENDAR */
-
-.bottom-grid{
-  display:grid;
-  grid-template-columns:1.15fr 1fr;
-  gap:14px;
-  margin-top:14px
-}
-
-.calendar-wrap{
-  overflow:auto
-}
-
-.calendar{
-  display:grid;
-  grid-template-columns:repeat(7,minmax(58px,1fr));
-  gap:5px;
-  min-width:420px
-}
-
-.cal-head{
-  text-align:center;
-  font-size:11px;
-  color:var(--muted);
-  padding:4px
-}
-
-.cal-day{
-  min-height:60px;
-  border:1px solid #eeeaf5;
-  border-radius:9px;
-  padding:6px;
-  position:relative;
-  background:#fff
-}
-
-.cal-day.empty{
-  border:0;
-  background:transparent
-}
-
-.cal-day.today{
-  border:2px solid var(--purple);
-  box-shadow:0 3px 10px #7c4dff1c
-}
-
-.cal-num{
-  font-size:11px;
-  font-weight:800
-}
-
-.cal-percent{
-  font-size:10px;
-  color:var(--green);
-  margin-top:9px
-}
-
-.cal-dot{
-  position:absolute;
-  bottom:6px;
-  left:7px;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#dcd7ea
-}
-
-.cal-dot.active{
-  background:var(--purple)
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px
-}
-
-.stat-box{
-  border:1px solid #f0eef6;
-  border-radius:14px;
-  padding:15px;
-  background:#fcfcff
-}
-
-.stat-box .big{
-  font-size:22px;
-  font-weight:900
-}
-
-.stat-box small{
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  margin-top:3px
-}
-
-.tip{
-  margin-top:10px;
-  background:#fbf7ff;
-  border:1px solid #eee5ff;
-  border-radius:14px;
-  padding:16px;
-  min-height:100px
-}
-
-.tip h3{
-  font-size:14px;
-  margin:0 0 8px
-}
-
-.tip p{
-  font-size:13px;
-  line-height:1.8;
-  margin:0
-}
-
-.footer{
-  margin-top:14px;
-  background:#f4efff;
-  border-radius:14px;
-  padding:10px;
-  text-align:center;
-  font-weight:800;
-  font-size:13px;
-  color:#51319b
-}
-
-/* MOBILE */
-
-@media(max-width:1000px){
-
-  .dashboard-grid{
-    grid-template-columns:1fr 1fr
-  }
-
-  .streak{
-    grid-column:1/-1;
-    min-height:160px
-  }
-
-  .habit-board{
-    grid-template-columns:145px repeat(4,minmax(125px,1fr))
-  }
-}
-
-@media(max-width:760px){
-
-  .container{
-    padding:10px
-  }
-
-  .topbar{
-    grid-template-columns:1fr
-  }
-
-  .actions{
-    justify-content:space-between
-  }
-
-  .date-nav{
-    justify-self:center
-  }
-
-  .dashboard-grid,
-  .mid-grid,
-  .bottom-grid{
-    grid-template-columns:1fr
-  }
-
-  .progress-card{
-    justify-content:center
-  }
-
-  .habit-board{
-    grid-template-columns:130px repeat(4,150px);
-    overflow-x:auto
-  }
-
-  .habit-board>*{
-    min-width:0
-  }
-
-  .habit-names{
-    position:sticky;
-    right:0;
-    background:#fff;
-    z-index:3
-  }
-
-  .habit-head{
-    align-items:flex-start;
-    gap:10px;
-    flex-direction:column
-  }
-
-  .ring{
-    width:135px;
-    height:135px
-  }
-
-  .ring:after{
-    width:101px;
-    height:101px
-  }
-
-  .quote-text{
-    font-size:15px
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr)
-  }
-}
-</style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<header class="topbar">
+<header class="header">
 
-  <div class="brand">
-    <div class="logo">✓</div>
+<div class="brand">
 
-    <div>
-      <h1>روزانه من 🌷</h1>
-      <p>قدم‌های کوچک امروز، پیشرفت بزرگ فردا ✨</p>
-    </div>
-  </div>
+<div class="logo">
+✓
+</div>
 
-  <div class="date-nav">
+<div>
+<h1>Habit Tracker</h1>
+<p>قدم‌های کوچک، موفقیت بزرگ ✨</p>
+</div>
 
-    <button onclick="changeMonth(-1)">‹</button>
+</div>
 
-    <div class="date-title" id="dateTitle">—</div>
 
-    <button onclick="changeMonth(1)">›</button>
+<div class="actions">
 
-  </div>
+<button id="themeBtn">
+☼
+</button>
 
-  <div class="actions">
+<button class="today">
+امروز
+</button>
 
-    <button class="action" onclick="toggleTheme()">
-      ☀️ / 🌙
-    </button>
-
-    <button class="action primary" onclick="goToday()">
-      امروز
-    </button>
-
-  </div>
+</div>
 
 </header>
 
 
-<!-- DASHBOARD -->
 
-<section class="dashboard-grid">
-
-  <div class="card progress-card">
-
-    <div
-      class="ring"
-      id="overallRing"
-      style="--p:0%"
-    >
-
-      <div class="ring-inner">
-
-        <div
-          class="ring-num"
-          id="overallPercent"
-        >
-          0%
-        </div>
-
-        <div class="ring-label">
-          پیشرفت کلی
-        </div>
-
-      </div>
-
-    </div>
+<section class="top-grid">
 
 
-    <div class="metric-list">
+<div class="card progress-card">
 
-      <div class="metric">
+<div class="circle">
 
-        <div class="metric-icon">
-          ☑️
-        </div>
+<div>
+<span id="percent">
+74%
+</span>
 
-        <div>
+<small>
+پیشرفت کلی
+</small>
 
-          <strong id="doneCount">
-            0
-          </strong>
+</div>
 
-          <span>
-            تیک‌های زده شده
-          </span>
-
-        </div>
-
-      </div>
+</div>
 
 
-      <div class="metric">
+<div class="numbers">
 
-        <div class="metric-icon">
-          📅
-        </div>
+<div>
 
-        <div>
+<b id="done">
+183
+</b>
 
-          <strong id="possibleCount">
-            0
-          </strong>
+<span>
+روزهای انجام شده
+</span>
 
-          <span>
-            تیک‌های برنامه‌ریزی شده
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- MONTHLY LINE CHART -->
+<div>
 
-  <div class="card chart-card">
+<b id="total">
+247
+</b>
 
-    <div class="card-title">
+<span>
+روزهای برنامه‌ریزی شده
+</span>
 
-      <h2>
-        📈 نمودار پیشرفت ماهانه
-      </h2>
+</div>
 
-    </div>
-
-    <svg
-      id="lineChart"
-      class="line-chart"
-      viewBox="0 0 600 190"
-      preserveAspectRatio="none"
-    ></svg>
-
-  </div>
+</div>
 
 
-  <!-- STREAK -->
+</div>
 
-  <div class="card streak">
 
-    <div class="fire">
-      🔥
-    </div>
 
-    <div
-      class="streak-num"
-      id="streakNum"
-    >
-      0
-    </div>
 
-    <p>
-      روز متوالی
-    </p>
+<div class="card">
 
-    <div class="trophy">
+<h3>
+نمودار پیشرفت روزانه
+</h3>
 
-      🏆 بهترین زنجیره شما
 
-      <b id="bestStreak">
-        0 روز
-      </b>
+<div class="bars" id="bars"></div>
 
-    </div>
 
-  </div>
+</div>
+
+
+
+
+
+<div class="card streak">
+
+<h3>
+بهترین زنجیره
+</h3>
+
+
+<div class="fire">
+🔥
+</div>
+
+
+<strong>
+23
+</strong>
+
+
+<p>
+روز متوالی
+</p>
+
+
+<div class="badge">
+🏆 طولانی‌ترین زنجیره شما
+<br>
+23 روز
+</div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- QUOTE + NOTES -->
-
-<section class="mid-grid">
-
-  <div class="card quote">
-
-    <div class="quote-mark">
-      “
-    </div>
-
-    <h3>
-      ✨ سخن انگیزشی امروز
-    </h3>
-
-    <p
-      class="quote-text"
-      id="quoteText"
-    >
-      امروز بهترین روز برای شروع است.
-    </p>
-
-    <div
-      class="quote-author"
-      id="quoteAuthor"
-    >
-      —
-    </div>
-
-  </div>
 
 
-  <div class="card notes">
 
-    <div class="card-title">
+<section class="card habits">
 
-      <h2>
-        📝 توضیحات و یادداشت‌های من
-      </h2>
 
-    </div>
+<div class="section-head">
 
-    <textarea
-      id="notes"
-      placeholder="اینجا درباره امروزت، احساساتت، موفقیت‌ها یا کارهایی که باید انجام بدهی بنویس..."
-    ></textarea>
 
-    <div class="save-status">
-      💾 ذخیره خودکار روی همین دستگاه
-    </div>
+<h2>
+☷ عادات روزانه
+</h2>
 
-  </div>
+
+<div class="add">
+
+<input 
+id="newHabit"
+placeholder="عادت جدید بنویس..."
+>
+
+
+<button onclick="addHabit()">
++
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="habit-table">
+
+
+<div class="names">
+
+</div>
+
+
+<div class="weeks">
+
+
+<div class="week purple">
+
+<h3>
+هفته ۱
+</h3>
+
+
+<div class="days">
+ش ی د س چ پ ج
+</div>
+
+
+</div>
+
+
+
+<div class="week green">
+
+<h3>
+هفته ۲
+</h3>
+
+
+<div class="days">
+ش ی د س چ پ ج
+</div>
+
+
+</div>
+
+
+
+
+<div class="week orange">
+
+<h3>
+هفته ۳
+</h3>
+
+
+<div class="days">
+ش ی د س چ پ ج
+</div>
+
+
+</div>
+
+
+
+
+<div class="week pink">
+
+<h3>
+هفته ۴
+</h3>
+
+
+<div class="days">
+ش ی د س چ پ ج
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+<div id="habitRows"></div>
+
+
 
 </section>
 
 
-<!-- HABITS -->
-
-<section class="card habits-card">
-
-  <div class="habit-head">
-
-    <div class="card-title">
-
-      <h2>
-        ☷ عادت‌های روزانه
-      </h2>
-
-    </div>
-
-    <div class="legend">
-
-      <span>
-        <i class="l1"></i>
-        هفته ۱
-      </span>
-
-      <span>
-        <i class="l2"></i>
-        هفته ۲
-      </span>
-
-      <span>
-        <i class="l3"></i>
-        هفته ۳
-      </span>
-
-      <span>
-        <i class="l4"></i>
-        هفته ۴
-      </span>
-
-    </div>
-
-  </div>
 
 
-  <div
-    class="habit-board"
-    id="habitBoard"
-  ></div>
 
-
-  <button
-    class="add-habit"
-    onclick="addHabit()"
-  >
-    ＋ افزودن عادت جدید
-  </button>
-
-</section>
-
-
-<!-- CALENDAR + STATS -->
 
 <section class="bottom-grid">
 
-  <div class="card calendar-wrap">
 
-    <div class="card-title">
+<div class="card">
 
-      <h2>
-        🗓️ تقویم این ماه
-      </h2>
-
-    </div>
-
-    <div
-      class="calendar"
-      id="calendar"
-    ></div>
-
-  </div>
+<h3>
+پیشرفت ماهانه
+</h3>
 
 
-  <div>
+<div class="circle small">
 
-    <div class="card">
+74%
 
-      <div class="card-title">
-
-        <h2>
-          آمار کلی این ماه
-        </h2>
-
-      </div>
+</div>
 
 
-      <div class="stats">
-
-        <div class="stat-box">
-
-          <div
-            class="big"
-            id="avgStat"
-          >
-            0%
-          </div>
-
-          <small>
-            میانگین روزانه
-          </small>
-
-        </div>
+</div>
 
 
-        <div class="stat-box">
-
-          <div
-            class="big"
-            id="activeDays"
-          >
-            0
-          </div>
-
-          <small>
-            تعداد روزهای فعال
-          </small>
-
-        </div>
 
 
-        <div class="stat-box">
+<div class="card">
 
-          <div
-            class="big"
-            id="bestDay"
-          >
-            0%
-          </div>
-
-          <small>
-            بهترین روز
-          </small>
-
-        </div>
+<h3>
+نمودار ماهانه
+</h3>
 
 
-        <div class="stat-box">
+<div class="line">
 
-          <div
-            class="big"
-            id="worstDay"
-          >
-            0%
-          </div>
-
-          <small>
-            کمترین روز
-          </small>
-
-        </div>
-
-      </div>
-
-    </div>
+</div>
 
 
-    <div class="tip">
+</div>
 
-      <h3>
-        💡 نکته امروز
-      </h3>
 
-      <p id="tipText">
-        امروز بهترین زمان برای ساختن یک قدم کوچک و واقعی است.
-      </p>
 
-    </div>
 
-  </div>
+<div class="card note">
+
+<h3>
+یادداشت‌ها
+</h3>
+
+
+<textarea placeholder="یادداشت روزانه..."></textarea>
+
+
+</div>
+
+
 
 </section>
 
 
-<div class="footer">
 
-  💜 تو هر روز، بهتر از دیروزی... به خودت افتخار کن
+
+<footer>
+
+✨ موفقیت حاصل کارهای کوچک است که هر روز تکرار می‌کنیم ✨
+
+</footer>
+
 
 </div>
 
-</div>
 
 
-<script>
+<script src="app.js"></script>
 
-/* =========================
-   BASIC SETTINGS
-========================= */
-
-const faNum = n =>
-  String(n).replace(
-    /\d/g,
-    d => "۰۱۲۳۴۵۶۷۸۹"[d]
-  );
-
-
-const today = new Date();
-
-let viewYear = today.getFullYear();
-let viewMonth = today.getMonth();
-
-
-/* =========================
-   HABITS
-========================= */
-
-let habits =
-  JSON.parse(
-    localStorage.getItem(
-      "roozane_habits_v2"
-    ) || "null"
-  ) ||
-
-  [
-    "🏃 ورزش ۳۰ دقیقه",
-    "📖 مطالعه",
-    "📗 خواندن قرآن",
-    "💧 نوشیدن آب",
-    "🧘 مدیتیشن",
-    "✏️ نوشتن روزانه",
-    "⏰ صبح زود بیدار شدن",
-    "🚫 بدون قند",
-    "💡 یادگیری جدید",
-    "❤️ شکرگزاری"
-  ];
-
-
-/* =========================
-   DATA
-========================= */
-
-let checks =
-  JSON.parse(
-    localStorage.getItem(
-      "roozane_checks_v2"
-    ) || "{}"
-  );
-
-
-let notes =
-  JSON.parse(
-    localStorage.getItem(
-      "roozane_notes_v2"
-    ) || "{}"
-  );
-
-
-/* =========================
-   MOTIVATIONAL QUOTES
-========================= */
-
-const quotes = [
-
-  [
-    "موفقیت حاصل کارهای کوچکِ تکرارشده در هر روز است.",
-    "جیم ران"
-  ],
-
-  [
-    "هر روز یک قدم کوچک، تو را به نسخه بهتر خودت نزدیک می‌کند.",
-    "روزانه من"
-  ],
-
-  [
-    "لازم نیست عالی باشی؛ فقط ادامه بده.",
-    "—"
-  ],
-
-  [
-    "آینده از کارهایی ساخته می‌شود که امروز انجام می‌دهی.",
-    "—"
-  ],
-
-  [
-    "شروع کوچک بهتر از منتظر ماندن برای شروع کامل است.",
-    "—"
-  ],
-
-  [
-    "به خودت اعتماد کن؛ تو از چیزی که فکر می‌کنی قوی‌تری.",
-    "—"
-  ],
-
-  [
-    "پیشرفت آهسته هم پیشرفت است.",
-    "—"
-  ]
-
-];
-
-
-const tips = [
-
-  "امروز فقط روی یک عادت تمرکز کن و همان را کامل انجام بده.",
-
-  "اگر انرژی کمی داری، نسخه کوچک‌تر عادتت را انجام بده؛ صفر بهتر نیست.",
-
-  "یک تیک کوچک امروز می‌تواند زنجیره فردا را بسازد.",
-
-  "قبل از خواب، دو دقیقه برای برنامه فردا وقت بگذار.",
-
-  "پیشرفتت را با دیروز خودت مقایسه کن، نه با دیگران."
-
-];
-
-
-/* =========================
-   SAVE
-========================= */
-
-function save(){
-
-  localStorage.setItem(
-    "roozane_habits_v2",
-    JSON.stringify(habits)
-  );
-
-  localStorage.setItem(
-    "roozane_checks_v2",
-    JSON.stringify(checks)
-  );
-
-  localStorage.setItem(
-    "roozane_notes_v2",
-    JSON.stringify(notes)
-  );
-
-}
-
-
-/* =========================
-   KEY
-========================= */
-
-function key(y,m,d,h){
-
-  return `${y}-${m+1}-${d}-${h}`;
-
-}
-
-
-/* =========================
-   CHECK
-========================= */
-
-function isDone(y,m,d,h){
-
-  return !!checks[
-    key(y,m,d,h)
-  ];
-
-}
-
-
-/* =========================
-   TOGGLE
-========================= */
-
-function toggle(y,m,d,h){
-
-  const k =
-    key(y,m,d,h);
-
-  checks[k] =
-    !checks[k];
-
-  save();
-
-  render();
-
-}
-
-
-/* =========================
-   DAY PERCENT
-========================= */
-
-function dayPercent(y,m,d){
-
-  if(habits.length === 0)
-    return 0;
-
-  let n = 0;
-
-  habits.forEach((_,h)=>{
-
-    if(
-      isDone(
-        y,
-        m,
-        d,
-        h
-      )
-    ){
-      n++;
-    }
-
-  });
-
-  return Math.round(
-    n / habits.length * 100
-  );
-
-}
-
-
-/* =========================
-   MONTH DAYS
-========================= */
-
-function monthDays(y,m){
-
-  return new Date(
-    y,
-    m + 1,
-    0
-  ).getDate();
-
-}
-
-
-/* =========================
-   MONTH PROGRESS
-========================= */
-
-function monthProgress(){
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-  let total =
-    days * habits.length;
-
-  let done = 0;
-
-
-  for(
-    let d = 1;
-    d <= days;
-    d++
-  ){
-
-    done += habits.reduce(
-      (sum,_,h)=>
-        sum +
-        (
-          isDone(
-            viewYear,
-            viewMonth,
-            d,
-            h
-          )
-          ? 1
-          : 0
-        ),
-      0
-    );
-
-  }
-
-
-  return total
-    ? Math.round(
-        done / total * 100
-      )
-    : 0;
-
-}
-
-
-/* =========================
-   WEEK PROGRESS
-========================= */
-
-function weekPercent(w){
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-  const start =
-    w * 7 + 1;
-
-  const end =
-    Math.min(
-      start + 6,
-      days
-    );
-
-
-  if(
-    start > days ||
-    habits.length === 0
-  ){
-    return 0;
-  }
-
-
-  let total = 0;
-  let done = 0;
-
-
-  for(
-    let d = start;
-    d <= end;
-    d++
-  ){
-
-    for(
-      let h = 0;
-      h < habits.length;
-      h++
-    ){
-
-      total++;
-
-      if(
-        isDone(
-          viewYear,
-          viewMonth,
-          d,
-          h
-        )
-      ){
-        done++;
-      }
-
-    }
-
-  }
-
-
-  return total
-    ? Math.round(
-        done / total * 100
-      )
-    : 0;
-
-}
-
-
-/* =========================
-   MAIN RENDER
-========================= */
-
-function render(){
-
-  renderHeader();
-
-  renderHabits();
-
-  renderCalendar();
-
-  renderLineChart();
-
-  renderStats();
-
-  renderQuote();
-
-  renderNotes();
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-function renderHeader(){
-
-  const fmt =
-    new Intl.DateTimeFormat(
-      "fa-IR",
-      {
-        year:"numeric",
-        month:"long"
-      }
-    );
-
-
-  document
-    .getElementById(
-      "dateTitle"
-    )
-    .textContent =
-      fmt.format(
-        new Date(
-          viewYear,
-          viewMonth,
-          1
-        )
-      );
-
-
-  const p =
-    monthProgress();
-
-
-  document
-    .getElementById(
-      "overallPercent"
-    )
-    .textContent =
-      faNum(p) + "%";
-
-
-  document
-    .getElementById(
-      "overallRing"
-    )
-    .style
-    .setProperty(
-      "--p",
-      p + "%"
-    );
-
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-
-  let done = 0;
-
-
-  for(
-    let d = 1;
-    d <= days;
-    d++
-  ){
-
-    for(
-      let h = 0;
-      h < habits.length;
-      h++
-    ){
-
-      if(
-        isDone(
-          viewYear,
-          viewMonth,
-          d,
-          h
-        )
-      ){
-
-        done++;
-
-      }
-
-    }
-
-  }
-
-
-  document
-    .getElementById(
-      "doneCount"
-    )
-    .textContent =
-      faNum(done);
-
-
-  document
-    .getElementById(
-      "possibleCount"
-    )
-    .textContent =
-      faNum(
-        days * habits.length
-      );
-
-}
-
-
-/* =========================
-   HABITS BOARD
-========================= */
-
-function renderHabits(){
-
-  const board =
-    document.getElementById(
-      "habitBoard"
-    );
-
-
-  board.innerHTML =
-    '<div class="habit-names">' +
-    '<div style="height:32px"></div>' +
-    '</div>';
-
-
-  const names =
-    board.firstChild;
-
-
-  habits.forEach(
-    (h,i)=>{
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-
-      row.className =
-        "habit-name";
-
-
-      row.innerHTML = `
-
-        <span style="flex:1">
-          ${escapeHtml(h)}
-        </span>
-
-        <button
-          class="small-btn"
-          onclick="removeHabit(${i})"
-        >
-          حذف
-        </button>
-
-      `;
-
-
-      names.appendChild(row);
-
-    }
-  );
-
-
-  const dayNames =
-    [
-      "ش",
-      "ی",
-      "د",
-      "س",
-      "چ",
-      "پ",
-      "ج"
-    ];
-
-
-  for(
-    let w = 0;
-    w < 4;
-    w++
-  ){
-
-    const col =
-      document.createElement(
-        "div"
-      );
-
-
-    col.className =
-      `week-col w${w+1}`;
-
-
-    let s = `
-
-      <div class="week-title">
-        هفته ${faNum(w+1)}
-      </div>
-
-      <div class="days-head">
-
-    `;
-
-
-    dayNames.forEach(
-      x => {
-
-        s += `
-          <span>${x}</span>
-        `;
-
-      }
-    );
-
-
-    s += `
-      </div>
-    `;
-
-
-    const start =
-      w * 7 + 1;
-
-
-    const days =
-      monthDays(
-        viewYear,
-        viewMonth
-      );
-
-
-    habits.forEach(
-      (_,h)=>{
-
-        s += `
-          <div class="check-row">
-        `;
-
-
-        for(
-          let i = 0;
-          i < 7;
-          i++
-        ){
-
-          const d =
-            start + i;
-
-
-          const exists =
-            d <= days;
-
-
-          const done =
-            exists &&
-            isDone(
-              viewYear,
-              viewMonth,
-              d,
-              h
-            );
-
-
-          s += `
-
-            <button
-              class="check ${done ? "done" : ""}"
-              ${
-                exists
-                  ? `onclick="toggle(${viewYear},${viewMonth},${d},${h})"`
-                  : "disabled"
-              }
-            >
-              ${done ? "✓" : ""}
-            </button>
-
-          `;
-
-        }
-
-
-        s += `
-          </div>
-        `;
-
-      }
-    );
-
-
-    const p =
-      weekPercent(w);
-
-
-    s += `
-
-      <div
-        class="week-ring"
-        style="--p:${p}%"
-      >
-
-        <span>
-          ${faNum(p)}%
-        </span>
-
-      </div>
-
-      <div class="week-total">
-
-        ${faNum(
-          Math.round(
-            p *
-            habits.length *
-            7 /
-            100
-          )
-        )}
-
-        /
-
-        ${faNum(
-          habits.length * 7
-        )}
-
-      </div>
-
-    `;
-
-
-    col.innerHTML = s;
-
-    board.appendChild(col);
-
-  }
-
-}
-
-
-/* =========================
-   CALENDAR
-========================= */
-
-function renderCalendar(){
-
-  const el =
-    document.getElementById(
-      "calendar"
-    );
-
-
-  el.innerHTML = "";
-
-
-  const names =
-    [
-      "ش",
-      "ی",
-      "د",
-      "س",
-      "چ",
-      "پ",
-      "ج"
-    ];
-
-
-  names.forEach(
-    n => {
-
-      el.innerHTML += `
-        <div class="cal-head">
-          ${n}
-        </div>
-      `;
-
-    }
-  );
-
-
-  const first =
-    new Date(
-      viewYear,
-      viewMonth,
-      1
-    );
-
-
-  let start =
-    (
-      first.getDay() + 1
-    ) % 7;
-
-
-  for(
-    let i = 0;
-    i < start;
-    i++
-  ){
-
-    el.innerHTML += `
-      <div class="cal-day empty"></div>
-    `;
-
-  }
-
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-
-  for(
-    let d = 1;
-    d <= days;
-    d++
-  ){
-
-    const p =
-      dayPercent(
-        viewYear,
-        viewMonth,
-        d
-      );
-
-
-    const active =
-      p > 0;
-
-
-    const isToday =
-      viewYear === today.getFullYear() &&
-      viewMonth === today.getMonth() &&
-      d === today.getDate();
-
-
-    el.innerHTML += `
-
-      <div
-        class="cal-day ${isToday ? "today" : ""}"
-      >
-
-        <div class="cal-num">
-          ${faNum(d)}
-        </div>
-
-        <div class="cal-percent">
-          ${faNum(p)}%
-        </div>
-
-        <span
-          class="cal-dot ${
-            active ? "active" : ""
-          }"
-        ></span>
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================
-   MONTHLY LINE CHART
-========================= */
-
-function renderLineChart(){
-
-  const svg =
-    document.getElementById(
-      "lineChart"
-    );
-
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-
-  const vals = [];
-
-
-  for(
-    let d = 1;
-    d <= days;
-    d++
-  ){
-
-    vals.push(
-      dayPercent(
-        viewYear,
-        viewMonth,
-        d
-      )
-    );
-
-  }
-
-
-  const W = 600;
-  const H = 190;
-  const L = 35;
-  const R = 10;
-  const T = 10;
-  const B = 28;
-
-  const iw =
-    W - L - R;
-
-  const ih =
-    H - T - B;
-
-
-  let out = "";
-
-
-  /* GRID */
-
-  [
-    0,
-    25,
-    50,
-    75,
-    100
-  ].forEach(
-    v => {
-
-      const y =
-        T +
-        ih -
-        (v / 100) * ih;
-
-
-      out += `
-
-        <line
-          x1="${L}"
-          x2="${W-R}"
-          y1="${y}"
-          y2="${y}"
-          stroke="#eeeaf5"
-          stroke-width="1"
-        />
-
-        <text
-          x="${L-7}"
-          y="${y+4}"
-          text-anchor="end"
-          font-size="11"
-          fill="#77809d"
-        >
-          ${v}%
-        </text>
-
-      `;
-
-    }
-  );
-
-
-  /* POINTS */
-
-  const pts =
-    vals.map(
-      (v,i) => [
-
-        L +
-        (
-          i /
-          Math.max(
-            days - 1,
-            1
-          )
-        ) *
-        iw,
-
-        T +
-        ih -
-        (v / 100) *
-        ih
-
-      ]
-    );
-
-
-  const poly =
-    pts
-      .map(
-        p => p.join(",")
-      )
-      .join(" ");
-
-
-  out += `
-
-    <polyline
-      points="${poly}"
-      fill="none"
-      stroke="#7c4dff"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-
-  `;
-
-
-  pts.forEach(
-    (p,i) => {
-
-      if(
-        i % 5 === 0 ||
-        i === days - 1
-      ){
-
-        out += `
-
-          <text
-            x="${p[0]}"
-            y="${H-7}"
-            text-anchor="middle"
-            font-size="10"
-            fill="#77809d"
-          >
-            ${faNum(i+1)}
-          </text>
-
-        `;
-
-      }
-
-
-      out += `
-
-        <circle
-          cx="${p[0]}"
-          cy="${p[1]}"
-          r="3.2"
-          fill="#fff"
-          stroke="#7c4dff"
-          stroke-width="2"
-        />
-
-      `;
-
-    }
-  );
-
-
-  svg.innerHTML =
-    out;
-
-}
-
-
-/* =========================
-   STATISTICS
-========================= */
-
-function renderStats(){
-
-  const days =
-    monthDays(
-      viewYear,
-      viewMonth
-    );
-
-
-  const vals = [];
-
-
-  for(
-    let d = 1;
-    d <= days;
-    d++
-  ){
-
-    vals.push(
-      dayPercent(
-        viewYear,
-        viewMonth,
-        d
-      )
-    );
-
-  }
-
-
-  const avg =
-    Math.round(
-      vals.reduce(
-        (a,b) => a+b,
-        0
-      ) /
-      (vals.length || 1)
-    );
-
-
-  const active =
-    vals.filter(
-      x => x > 0
-    ).length;
-
-
-  document
-    .getElementById(
-      "avgStat"
-    )
-    .textContent =
-      faNum(avg) + "%";
-
-
-  document
-    .getElementById(
-      "activeDays"
-    )
-    .textContent =
-      faNum(active);
-
-
-  document
-    .getElementById(
-      "bestDay"
-    )
-    .textContent =
-      faNum(
-        Math.max(
-          0,
-          ...vals
-        )
-      ) + "%";
-
-
-  document
-    .getElementById(
-      "worstDay"
-    )
-    .textContent =
-      faNum(
-        Math.min(
-          0,
-          ...vals
-        )
-      ) + "%";
-
-
-  renderStreak();
-
-}
-
-
-/* =========================
-   STREAK
-========================= */
-
-function dateDone(d){
-
-  return (
-    dayPercent(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate()
-    ) === 100 &&
-    habits.length > 0
-  );
-
-}
-
-
-function renderStreak(){
-
-  let cur = 0;
-  let best = 0;
-
-
-  /* CURRENT STREAK */
-
-  for(
-    let i = 0;
-    i < 370;
-    i++
-  ){
-
-    let d =
-      new Date(today);
-
-
-    d.setDate(
-      d.getDate() - i
-    );
-
-
-    if(
-      dateDone(d)
-    ){
-
-      cur++;
-
-    }else{
-
-      break;
-
-    }
-
-  }
-
-
-  /* BEST STREAK */
-
-  let run = 0;
-
-
-  for(
-    let i = 369;
-    i >= 0;
-    i--
-  ){
-
-    let d =
-      new Date(today);
-
-
-    d.setDate(
-      d.getDate() - i
-    );
-
-
-    if(
-      dateDone(d)
-    ){
-
-      run++;
-
-      best =
-        Math.max(
-          best,
-          run
-        );
-
-    }else{
-
-      run = 0;
-
-    }
-
-  }
-
-
-  document
-    .getElementById(
-      "streakNum"
-    )
-    .textContent =
-      faNum(cur);
-
-
-  document
-    .getElementById(
-      "bestStreak"
-    )
-    .textContent =
-      faNum(best) +
-      " روز";
-
-}
-
-
-/* =========================
-   DAILY QUOTE
-========================= */
-
-function renderQuote(){
-
-  const start =
-    new Date(
-      today.getFullYear(),
-      0,
-      0
-    );
-
-
-  const diff =
-    today - start;
-
-
-  const day =
-    Math.floor(
-      diff /
-      86400000
-    );
-
-
-  const q =
-    quotes[
-      day %
-      quotes.length
-    ];
-
-
-  document
-    .getElementById(
-      "quoteText"
-    )
-    .textContent =
-      q[0];
-
-
-  document
-    .getElementById(
-      "quoteAuthor"
-    )
-    .textContent =
-      "— " + q[1];
-
-
-  document
-    .getElementById(
-      "tipText"
-    )
-    .textContent =
-      tips[
-        day %
-        tips.length
-      ];
-
-}
-
-
-/* =========================
-   NOTES
-========================= */
-
-function renderNotes(){
-
-  const k =
-    `${viewYear}-${viewMonth}`;
-
-
-  const el =
-    document.getElementById(
-      "notes"
-    );
-
-
-  el.value =
-    notes[k] || "";
-
-
-  el.oninput =
-    () => {
-
-      notes[k] =
-        el.value;
-
-      save();
-
-    };
-
-}
-
-
-/* =========================
-   ADD HABIT
-========================= */
-
-function addHabit(){
-
-  habits.push(
-    "✨ عادت جدید"
-  );
-
-  save();
-
-  render();
-
-}
-
-
-/* =========================
-   REMOVE HABIT
-========================= */
-
-function removeHabit(i){
-
-  if(
-    confirm(
-      "این عادت حذف شود؟"
-    )
-  ){
-
-    habits.splice(
-      i,
-      1
-    );
-
-    save();
-
-    render();
-
-  }
-
-}
-
-
-/* =========================
-   MONTH NAVIGATION
-========================= */
-
-function changeMonth(n){
-
-  viewMonth += n;
-
-
-  if(
-    viewMonth < 0
-  ){
-
-    viewMonth = 11;
-
-    viewYear--;
-
-  }
-
-
-  if(
-    viewMonth > 11
-  ){
-
-    viewMonth = 0;
-
-    viewYear++;
-
-  }
-
-
-  render();
-
-}
-
-
-/* =========================
-   TODAY
-========================= */
-
-function goToday(){
-
-  viewYear =
-    today.getFullYear();
-
-  viewMonth =
-    today.getMonth();
-
-  render();
-
-}
-
-
-/* =========================
-   DARK MODE
-========================= */
-
-function toggleTheme(){
-
-  document.body.classList.toggle(
-    "dark"
-  );
-
-
-  document.body.style.background =
-    document.body.classList.contains(
-      "dark"
-    )
-      ? "#171522"
-      : "";
-
-}
-
-
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHtml(s){
-
-  return String(s)
-    .replace(
-      /[&<>"']/g,
-      m =>
-        ({
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-        }[m])
-    );
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-render();
-
-</script>
 
 </body>
+
 </html>
